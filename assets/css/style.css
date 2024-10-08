@@ -42,3 +42,19 @@ main {
   height: auto;
   border-radius: 100%;
 }
+.action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.action a {
+  text-decoration: none;
+  color: green;
+}
+
+.login {
+  display: block;
+}
+.register {
+  display: none;
+}
