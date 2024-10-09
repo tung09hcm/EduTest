@@ -5,6 +5,10 @@ const password = document.getElementById("password");
 const confirmPassword = document.getElementById("confirmPassword");
 const registeer_button = document.getElementById("register_action");
 
+const fullname = document.getElementById("fullname");
+const username = document.getElementById("username");
+const email = document.getElementById("email");
+
 // Thêm sự kiện click cho liên kết
 registerLink.addEventListener("click", function (event) {
   event.preventDefault(); // Ngăn chặn hành động mặc định của thẻ a

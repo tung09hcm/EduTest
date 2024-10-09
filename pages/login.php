@@ -6,7 +6,7 @@
     $_SESSION["name"] = $_POST["name"];
     $_SESSION["email"] = $_POST["email"];
     $_SESSION["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    
+    // $_SESSION["password"] = $_POST["password"];
     $sql = "INSERT INTO user (username, name, email, password) 
             VALUES ('" . $_SESSION["username"] . "', 
                     '" . $_SESSION["name"] . "', 
@@ -22,9 +22,56 @@
     }
 
     // Chuyển hướng tới homepage.php sau khi đăng nhập thành công
-    header("Location: ../index.php");
+    header("Location: login.php");
     exit(); // Đảm bảo rằng không có mã nào được thực thi sau chuyển hướng
   }
+
+  else if (isset($_POST["login"])) {
+    $_SESSION["username"] = $_POST["username_login"];
+    $_SESSION["password"] = $_POST["password_login"];
+
+    // Lấy username và password từ session
+    $username = $_SESSION["username"];
+    $password = $_SESSION["password"];
+
+    // Sử dụng prepared statement để truy vấn username
+    $stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Lấy dòng kết quả
+        $row = $result->fetch_assoc();
+        
+        // Kiểm tra mật khẩu bằng password_verify
+        if (password_verify($password, $row['password'])) {
+            // Mật khẩu đúng, lưu thông tin vào session
+            $_SESSION["username"] = $username;
+
+            // Chuyển hướng tới trang chính
+            header("Location: test.php");
+            exit();
+        } else {
+            // Mật khẩu sai
+            echo "<script>
+                    alert('Tên đăng nhập hoặc mật khẩu không chính xác!');
+                    window.location.href = 'login.php';
+                  </script>";
+        }
+    } else {
+        // Username không tồn tại
+        echo "<script>
+                alert('Tên đăng nhập hoặc mật khẩu không chính xác!');
+                window.location.href = 'login.php';
+              </script>";
+    }
+    // Đóng kết nối
+    $stmt->close();
+
+    
+  }
+  $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,10 +102,9 @@
     <link rel="stylesheet" href="../assets/css/responsive.css" />
   </head>
   <body class="bg-dark">
-  <nav
+    <nav
       class="navbar navbar-expand-lg bg-dark navbar-dark py-3"
-      data-bs-theme="dark"
-    >
+      data-bs-theme="dark">
       <div class="container">
         <a class="navbar-brand" href="../index.php">
           <img
@@ -116,6 +162,7 @@
         </div>
       </div>
     </nav>
+
     <main class="bg-dark">
       <section
         class="hero d-flex align-items-center text-center bg-dark"
@@ -124,22 +171,23 @@
         <div class="container right">
           <img src="../assets/images/login_img.jpg" alt="hero image" />
         </div>
+
         <div class="container left text-center mt-5 register">
           <h2 class="mb-4">Đăng Ký Tài Khoản</h2>
           <form action="login.php" method="post">
             <div class="mb-3 text-start">
-              <label for="fullname" class="form-label">Họ và Tên</label>
+              <label for="fullname" class="form-label">Tên đăng nhập</label>
               <input
                 type="text"
                 class="form-control"
                 id="fullname"
-                placeholder="Nhập họ và tên"
+                placeholder="Nhập tên đăng nhập"
                 name = "username"
                 required
               />
             </div>
             <div class="mb-3 text-start">
-              <label for="username" class="form-label">Tên người dùng</label>
+              <label for="username" class="form-label">Họ và Tên</label>
               <input
                 type="text"
                 class="form-control"
@@ -192,9 +240,10 @@
             </div>
           </form>
         </div>
+
         <div class="container left text-center mt-5 login">
           <h2 class="mb-4">Đăng Nhập</h2>
-          <form>
+          <form action="login.php" method="post">
             <div class="mb-3 text-start">
               <label for="username" class="form-label">Tên người dùng</label>
               <input
@@ -202,6 +251,7 @@
                 class="form-control"
                 id="username_login"
                 placeholder="Nhập tên người dùng"
+                name ="username_login"
                 required
               />
             </div>
@@ -212,6 +262,7 @@
                 class="form-control"
                 id="password_login"
                 placeholder="Nhập mật khẩu"
+                name ="password_login"
                 required
               />
             </div>
@@ -219,7 +270,7 @@
               <a href="#" class="register_hyperlink" id="register_x"
                 >New to EduTest? Register ?</a
               >
-              <button type="submit" class="btn btn-success">Đăng nhập</button>
+              <input type="submit" class="btn btn-success" name="login" value = "Đăng nhập" id="register_action">
             </div>
           </form>
         </div>
