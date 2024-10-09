@@ -58,22 +58,22 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="#"
                 >Flashcard</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="#"
                 >Class</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="#"
                 >Test</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="#"
                 >Notification</a
               >
             </li>

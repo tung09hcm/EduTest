@@ -1,5 +1,30 @@
 <?php
   session_start();
+  include("../include/database.php");
+  if (isset($_POST["register"])) {
+    $_SESSION["username"] = $_POST["username"];
+    $_SESSION["name"] = $_POST["name"];
+    $_SESSION["email"] = $_POST["email"];
+    $_SESSION["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    
+    $sql = "INSERT INTO user (username, name, email, password) 
+            VALUES ('" . $_SESSION["username"] . "', 
+                    '" . $_SESSION["name"] . "', 
+                    '" . $_SESSION["email"] . "', 
+                    '" . $_SESSION["password"] . "')";
+
+    try{
+      mysqli_query($conn, $sql);
+    }
+    catch(mysqli_sql_exception)
+    {
+      echo " cant register !!!";
+    }
+
+    // Chuyển hướng tới homepage.php sau khi đăng nhập thành công
+    header("Location: ../index.php");
+    exit(); // Đảm bảo rằng không có mã nào được thực thi sau chuyển hướng
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +60,7 @@
       data-bs-theme="dark"
     >
       <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="../index.php">
           <img
             src="../assets/images/Thumbnails-11.png"
             alt="EduTest Logo"
@@ -56,27 +81,27 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link active" aria-current="page" href="../index.php"
                 >EduTest</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="#"
                 >Flashcard</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="#"
                 >Class</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="#"
                 >Test</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="#"
                 >Notification</a
               >
             </li>
@@ -101,7 +126,7 @@
         </div>
         <div class="container left text-center mt-5 register">
           <h2 class="mb-4">Đăng Ký Tài Khoản</h2>
-          <form>
+          <form action="login.php" method="post">
             <div class="mb-3 text-start">
               <label for="fullname" class="form-label">Họ và Tên</label>
               <input
@@ -109,6 +134,7 @@
                 class="form-control"
                 id="fullname"
                 placeholder="Nhập họ và tên"
+                name = "username"
                 required
               />
             </div>
@@ -120,11 +146,8 @@
                 id="username"
                 placeholder="Nhập tên người dùng"
                 required
+                name = "name"
               />
-            </div>
-            <div class="mb-3 text-start">
-              <label for="dob" class="form-label">Ngày tháng năm sinh</label>
-              <input type="date" class="form-control" id="dob" required />
             </div>
             <div class="mb-3 text-start">
               <label for="email" class="form-label">Địa chỉ Email</label>
@@ -134,6 +157,7 @@
                 id="email"
                 placeholder="Nhập địa chỉ email"
                 required
+                name = "email"
               />
             </div>
             <div class="mb-3 text-start">
@@ -144,6 +168,7 @@
                 id="password"
                 placeholder="Nhập mật khẩu"
                 required
+                name = "password"
               />
             </div>
             <div class="mb-3 text-start">
@@ -162,7 +187,8 @@
               <a href="#" class="register_hyperlink" id="login_x"
                 >Already have an account? Login ?</a
               >
-              <button type="submit" class="btn btn-success">Đăng ký</button>
+              <input type="submit" class="btn btn-success" name="register" value = "Đăng ký" id="register_action">
+              <!-- <button type="submit" class="btn btn-success"></button> -->
             </div>
           </form>
         </div>
@@ -174,7 +200,7 @@
               <input
                 type="text"
                 class="form-control"
-                id="username"
+                id="username_login"
                 placeholder="Nhập tên người dùng"
                 required
               />
@@ -184,7 +210,7 @@
               <input
                 type="password"
                 class="form-control"
-                id="password"
+                id="password_login"
                 placeholder="Nhập mật khẩu"
                 required
               />
