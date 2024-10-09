@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -27,12 +30,12 @@
     <link rel="stylesheet" href="../assets/css/responsive.css" />
   </head>
   <body class="bg-dark">
-    <nav
+  <nav
       class="navbar navbar-expand-lg bg-dark navbar-dark py-3"
       data-bs-theme="dark"
     >
       <div class="container">
-        <a class="navbar-brand" href="../index.html">
+        <a class="navbar-brand" href="#">
           <img
             src="../assets/images/Thumbnails-11.png"
             alt="EduTest Logo"
@@ -53,21 +56,23 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a
-                class="nav-link active"
-                aria-current="page"
-                href="../index.html"
+              <a class="nav-link active" aria-current="page" href="#"
                 >EduTest</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#"
-                >Your Flashcards</a
+                >Flashcard</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#"
-                >Your Class</a
+                >Class</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#"
+                >Test</a
               >
             </li>
             <li class="nav-item">
@@ -77,7 +82,7 @@
             </li>
           </ul>
           <a
-            href="./pages/login.html"
+            href="#"
             class="btn btn-outline-success"
             id="join_for_free"
           >

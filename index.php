@@ -59,12 +59,17 @@
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#"
-                >Your Flashcards</a
+                >Flashcard</a
               >
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#"
-                >Your Class</a
+                >Class</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#"
+                >Test</a
               >
             </li>
             <li class="nav-item">
@@ -74,7 +79,7 @@
             </li>
           </ul>
           <a
-            href="./pages/login.html"
+            href="./pages/login.php"
             class="btn btn-outline-success"
             id="join_for_free"
           >
@@ -84,25 +89,28 @@
       </div>
     </nav>
 
-    <main class="bg-dark">
+    <main class="bg-dark container">
       <section
-        class="hero d-flex align-items-center text-center bg-dark"
+        class="hero d-flex align-items-center text-center bg-dark container"
         style="height: 80vh"
       >
         <div class="container left text-start">
           <h1 class="display-4 fw-bold">Welcome to EduTest</h1>
-          <p class="lead mb-4" style="max-width: 70%">
+          <p class="lead mb-4">
             Empower your learning experience with tools for teachers and
             students. Create classes, add students, and design custom quizzes to
             share with others.
           </p>
-          <a href="#explore" class="btn btn-success btn-lg">Explore Now</a>
+          <a href="./pages/login.php" class="btn btn-success btn-lg"
+            >Explore Now</a
+          >
         </div>
         <div class="container right">
           <img src="./assets/images/hero.jpg" alt="hero image" />
         </div>
       </section>
     </main>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
