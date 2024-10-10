@@ -2,13 +2,8 @@
     include("../include/database.php");
     session_start();
 
-    // Ngăn caching
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Pragma: no-cache");
-
     // Kiểm tra xem biến kết nối ($conn) đã được khởi tạo hay chưa
-    if (isset($conn)) {
+    if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
         // Kiểm tra xem người dùng đã đăng nhập chưa
         if (isset($_SESSION["username"])) {
             $username = $_SESSION["username"];
@@ -32,10 +27,13 @@
             $stmt->close();
             $conn->close();
         } else {
-            echo "Xin chào, khách!";
+            header("Location: error.html");
+            exit();
         }
-    } else {
-        echo "Không thể kết nối đến cơ sở dữ liệu.";
+    } 
+    else {  
+      header("Location: error.html");
+      exit();
     }
 ?>
 
@@ -48,11 +46,8 @@
     <!-- EMBED fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="icon"
-      type="image/png"
-      href="../assets/images/Thumbnails-11.png"
-    />
+    <link rel="icon" type="image/png" href="../assets/images/Thumbnails-11.png?v=1">
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -119,17 +114,16 @@
             </li>
           </ul>
           <h1>
-          <?php
-            echo '
-              <div style="display: inline-block;">
-                <button class="btn btn-outline-success">Xin chào, ' . htmlspecialchars($name) . '!</button>
-                <form action="logout.php" method="POST" style="display: inline;">
-                  <button type="submit" class="btn btn-outline-danger">Đăng xuất</button>
-                </form>
-              </div>
-            ';
-          ?>
-
+            <?php
+              echo '
+                <div style="display: inline-block;">
+                  <button class="btn btn-outline-success">Xin chào, ' . htmlspecialchars($name) . '!</button>
+                  <form action="logout.php" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-outline-danger">Đăng xuất</button>
+                  </form>
+                </div>
+              ';
+            ?>
           </h1>
         </div>
       </div>

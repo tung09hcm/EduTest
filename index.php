@@ -1,9 +1,10 @@
 <?php
   session_start();
 
-  if (isset($_SESSION['username'])) {
-      // Người dùng đã đăng nhập
-      header("Location: ./pages/homepage.php");
+  if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
+    // Người dùng đã đăng nhập
+    header("Location: ./homepage.php");
+    exit();
   } 
 ?>
 

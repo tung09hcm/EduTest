@@ -2,13 +2,12 @@
   session_start();
   include("../include/database.php");
 
-  if (isset($_SESSION['username'])) {
+  if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
       // Người dùng đã đăng nhập
-      header("Location: ./pages/homepage.php");
-  } 
-
-
-  if (isset($_POST["register"])) {
+      header("Location: ./homepage.php");
+      exit();
+  }
+  else if (isset($_POST["register"])) {
     $_SESSION["username"] = $_POST["username"];
     $_SESSION["name"] = $_POST["name"];
     $_SESSION["email"] = $_POST["email"];
@@ -27,12 +26,11 @@
     {
       echo " cant register !!!";
     }
-
+    $conn->close();
     // Chuyển hướng tới homepage.php sau khi đăng nhập thành công
-    header("Location: login.php");
+    header("Location: homepage.php");
     exit(); // Đảm bảo rằng không có mã nào được thực thi sau chuyển hướng
   }
-
   else if (isset($_POST["login"])) {
     $_SESSION["username"] = $_POST["username_login"];
     $_SESSION["password"] = $_POST["password_login"];
@@ -55,30 +53,83 @@
         if (password_verify($password, $row['password'])) {
             // Mật khẩu đúng, lưu thông tin vào session
             $_SESSION["username"] = $username;
-
+            $_SESSION["login"] = true;
             // Chuyển hướng tới trang chính
             header("Location: homepage.php");
             exit();
         } else {
             // Mật khẩu sai
-            echo "<script>
-                    alert('Tên đăng nhập hoặc mật khẩu không chính xác!');
-                    window.location.href = 'login.php';
-                  </script>";
+            echo "
+              <div class='notification'>
+                  <p>Tên đăng nhập hoặc mật khẩu không chính xác!</p>
+              </div>
+              <script>
+                  // Hiển thị thông báo dạng popup trên nền web
+                  const notification = document.querySelector('.notification');
+                  notification.style.position = 'fixed';
+                  notification.style.top = '20px';
+                  notification.style.right = '-300px';
+                  notification.style.backgroundColor = '#f44336';
+                  notification.style.color = 'white';
+                  notification.style.padding = '16px';
+                  notification.style.borderRadius = '4px';
+                  notification.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.1)';
+                  notification.style.zIndex = '1000';
+                  notification.style.transition = 'right 0.5s ease, opacity 0.5s ease';
+                  setTimeout(() => {
+                      notification.style.right = '20px'; // Hiệu ứng trượt vào màn hình
+                  }, 10);
+                  // Sau 3 giây, trượt ra ngoài và xóa thông báo
+                  setTimeout(() => {
+                      notification.style.right = '-300px';
+                      setTimeout(() => {
+                          notification.remove();
+                      }, 500); // Đợi hiệu ứng hoàn tất trước khi xóa
+                  }, 3000);
+              </script>
+            ";
+            // echo '<script>alert("sai mật khẩu");</script>';
         }
     } else {
         // Username không tồn tại
-        echo "<script>
-                alert('Tên đăng nhập hoặc mật khẩu không chính xác!');
-                window.location.href = 'login.php';
-              </script>";
+        echo "
+          <div class='notification'>
+              <p>Tên đăng nhập hoặc mật khẩu không chính xác!</p>
+          </div>
+          <script>
+              // Hiển thị thông báo dạng popup trên nền web
+              const notification = document.querySelector('.notification');
+              notification.style.position = 'fixed';
+              notification.style.top = '20px';
+              notification.style.right = '-300px';
+              notification.style.backgroundColor = '#f44336';
+              notification.style.color = 'white';
+              notification.style.padding = '16px';
+              notification.style.borderRadius = '4px';
+              notification.style.boxShadow = '0px 4px 8px rgba(0, 0, 0, 0.1)';
+              notification.style.zIndex = '1000';
+              notification.style.transition = 'right 0.5s ease, opacity 0.5s ease';
+              setTimeout(() => {
+                  notification.style.right = '20px'; // Hiệu ứng trượt vào màn hình
+              }, 10);
+              // Sau 3 giây, trượt ra ngoài và xóa thông báo
+              setTimeout(() => {
+                  notification.style.right = '-300px';
+                  setTimeout(() => {
+                      notification.remove();
+                  }, 500); // Đợi hiệu ứng hoàn tất trước khi xóa
+              }, 3000);
+          </script>
+        ";
     }
     // Đóng kết nối
     $stmt->close();
+    $conn->close();
 
     
   }
-  $conn->close();
+
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,11 +140,8 @@
     <!-- EMBED fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="icon"
-      type="image/png"
-      href="../assets/images/Thumbnails-11.png"
-    />
+    <link rel="icon" type="image/png" href="../assets/images/Thumbnails-11.png?v=1">
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -109,6 +157,7 @@
     <link rel="stylesheet" href="../assets/css/responsive.css" />
   </head>
   <body class="bg-dark">
+
     <nav
       class="navbar navbar-expand-lg bg-dark navbar-dark py-3"
       data-bs-theme="dark">

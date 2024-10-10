@@ -27,6 +27,30 @@ loginLink.addEventListener("click", function (event) {
 registeer_button.addEventListener("click", function (event) {
   if (password.value != confirmPassword.value) {
     event.preventDefault(); // Ngăn gửi biểu mẫu
-    alert("Mật khẩu và xác nhận mật khẩu không khớp!");
+
+    // Tạo thông báo mới
+    // const notification = document.createElement("div");
+    // notification.classList.add("notification");
+    // notification.innerHTML = `
+    //   <div style="position: fixed; top: 20px; right: -300px; background-color: #f44336; color: white; padding: 16px; border-radius: 4px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); transition: right 0.5s ease, opacity 0.5s ease; z-index: 1000;">
+    //     Mật khẩu và xáccc nhận mật khẩu không khớp!
+    //   </div>
+    // `;
+
+    // // Thêm thông báo vào body
+    // document.body.appendChild(notification);
+
+    // // Kích hoạt hiệu ứng trượt vào màn hình
+    // setTimeout(() => {
+    //   notification.firstChild.style.right = "20px";
+    // }, 10);
+
+    // // Sau 3 giây, trượt ra ngoài và xóa thông báo
+    // setTimeout(() => {
+    //   notification.firstChild.style.right = "-300px";
+    //   setTimeout(() => {
+    //     notification.remove();
+    //   }, 500); // Đợi hiệu ứng hoàn tất trước khi xóa
+    // }, 3000);
   }
 });

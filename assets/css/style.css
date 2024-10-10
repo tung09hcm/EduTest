@@ -54,9 +54,7 @@ main {
 
 .login {
   display: block;
-  transition: opacity 2s ease-in-out;
 }
 .register {
   display: none;
-  transition: opacity 2s ease-in-out;
 }
