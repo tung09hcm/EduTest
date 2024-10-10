@@ -1,3 +1,12 @@
+<?php
+  session_start();
+
+  if (isset($_SESSION['username'])) {
+      // Người dùng đã đăng nhập
+      header("Location: ./pages/homepage.php");
+  } 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -58,22 +67,22 @@
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="./pages/login.php"
                 >Flashcard</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="./pages/login.php"
                 >Class</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="./pages/login.php"
                 >Test</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="#"
+              <a class="nav-link " aria-current="page" href="./pages/login.php"
                 >Notification</a
               >
             </li>

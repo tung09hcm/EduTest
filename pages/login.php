@@ -1,6 +1,13 @@
 <?php
   session_start();
   include("../include/database.php");
+
+  if (isset($_SESSION['username'])) {
+      // Người dùng đã đăng nhập
+      header("Location: ./pages/homepage.php");
+  } 
+
+
   if (isset($_POST["register"])) {
     $_SESSION["username"] = $_POST["username"];
     $_SESSION["name"] = $_POST["name"];
@@ -50,7 +57,7 @@
             $_SESSION["username"] = $username;
 
             // Chuyển hướng tới trang chính
-            header("Location: test.php");
+            header("Location: homepage.php");
             exit();
         } else {
             // Mật khẩu sai
