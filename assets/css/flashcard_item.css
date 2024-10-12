@@ -7,17 +7,17 @@
   padding: 10px;
 }
 .communication_item img {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   object-fit: cover;
   border-radius: 100%;
 }
 
 .x:hover {
-  background-color: gray;
+  background-color: #212529;
   border-radius: 50px;
 }
 .communication_item.active {
-  background-color: gray;
+  background-color: #212529;
   border-radius: 50px;
 }
