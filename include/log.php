@@ -1,0 +1,82 @@
+<?php
+  session_start();
+  include("../include/database.php");
+
+  if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
+      // Người dùng đã đăng nhập
+      header("Location: ../pages/homepage.php");
+      exit();
+  }
+  else if (isset($_POST["register"])) {
+    $_SESSION["username"] = $_POST["username"];
+    $_SESSION["name"] = $_POST["name"];
+    $_SESSION["email"] = $_POST["email"];
+    $_SESSION["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    // $_SESSION["password"] = $_POST["password"];
+    $sql = "INSERT INTO user (username, name, email, password) 
+            VALUES ('" . $_SESSION["username"] . "', 
+                    '" . $_SESSION["name"] . "', 
+                    '" . $_SESSION["email"] . "', 
+                    '" . $_SESSION["password"] . "')";
+
+    try{
+      mysqli_query($conn, $sql);
+    }
+    catch(mysqli_sql_exception)
+    {
+      echo " cant register !!!";
+    }
+    $conn->close();
+    $_SESSION["login"] = true;
+    // Chuyển hướng tới homepage.php sau khi đăng nhập thành công
+    header("Location: ../pages/homepage.php");
+    exit(); // Đảm bảo rằng không có mã nào được thực thi sau chuyển hướng
+  }
+  else if (isset($_POST["login"])) {
+    $_SESSION["username"] = $_POST["username_login"];
+    $_SESSION["password"] = $_POST["password_login"];
+
+    // Lấy username và password từ session
+    $username = $_SESSION["username"];
+    $password = $_SESSION["password"];
+
+    // Sử dụng prepared statement để truy vấn username
+    $stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Lấy dòng kết quả
+        $row = $result->fetch_assoc();
+        
+        // Kiểm tra mật khẩu bằng password_verify
+        if (password_verify($password, $row['password'])) {
+            // Mật khẩu đúng, lưu thông tin vào session
+            $_SESSION["username"] = $username;
+            $_SESSION["login"] = true;
+            // Chuyển hướng tới trang chính
+            header("Location: ../pages/homepage.php");
+            exit();
+        } else {
+            // Mật khẩu sai, lưu thông báo vào session
+            $_SESSION["login_error"] = "Tên đăng nhập hoặc mật khẩu không chính xác!";
+            header("Location: ../pages/login.php"); // Quay lại trang đăng nhập
+            exit();
+            // echo '<script>alert("sai mật khẩu");</script>';
+        }
+    } else {
+        // Mật khẩu sai, lưu thông báo vào session
+        $_SESSION["login_error"] = "Tên đăng nhập hoặc mật khẩu không chính xác!";
+        header("Location: ../pages/login.php"); // Quay lại trang đăng nhập
+        exit();
+    }
+    // Đóng kết nối
+    $stmt->close();
+    $conn->close();
+
+    
+  }
+
+  
+?>

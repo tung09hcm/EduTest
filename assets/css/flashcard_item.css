@@ -1,0 +1,23 @@
+.communication_item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 10px;
+}
+.communication_item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+.x:hover {
+  background-color: gray;
+  border-radius: 50px;
+}
+.communication_item.active {
+  background-color: gray;
+  border-radius: 50px;
+}
