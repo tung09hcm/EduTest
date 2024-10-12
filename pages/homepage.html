@@ -68,82 +68,32 @@
     <link rel="stylesheet" href="../assets/css/flashcard_item.css" />
   </head>
   <body class="bg-dark">
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img
-            src="../assets/images/Thumbnails-11.png"
-            alt="EduTest Logo"
-            class="logo_img"
-          />
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
-                >EduTest</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Flashcard</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Class</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Test</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Notification</a>
-            </li>
-          </ul>
-
-          <form
-            class="d-flex"
-            role="search"
-            action="../include/logout.php"
-            method="POST"
-          >
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav>
     <div class="main_container">
       <!-- LEFT CONTAINER -->
       <div class="left">
-        <a class="communication_item self">
-          <img src="../assets/images/user_avatar/cat.jpg" alt="user_avatar" />
-          <h1>ryo_yamada</h1>
-        </a>
+        <div class="home item" style="color: #22b14c">
+          <i class="fa-solid fa-house"></i>
+          <h1>Home</h1>
+        </div>
+
+        <div class="search item">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <h1>Explore</h1>
+        </div>
+
+        <div class="notifications item">
+          <i class="fa-solid fa-bell"></i>
+          <h1>Notifications</h1>
+        </div>
+
+        <div class="message item">
+          <i class="fa-solid fa-message"></i>
+          <h1>Messages</h1>
+        </div>
 
         <div class="friend item">
           <i class="fa-solid fa-user"></i>
           <h1>Friend</h1>
-        </div>
-
-        <div class="class item">
-          <i class="fa-solid fa-user-group"></i>
-          <h1>Class</h1>
         </div>
 
         <div class="folder item">
@@ -162,7 +112,11 @@
           style="display: inline; margin-left: 8px"
           class="d-flex logout_homepage"
         >
-          <button type="submit" class="btn btn-outline-danger">
+          <a class="communication_item self">
+            <img src="../assets/images/user_avatar/cat.jpg" alt="user_avatar" />
+            <h1>ryo_yamada</h1>
+          </a>
+          <button type="submit" class="btn" style="color: red">
             Đăng xuất
           </button>
         </form>
@@ -170,6 +124,17 @@
       <!-- CENTER CONTAINER -->
 
       <div class="center">
+        <div class="create bg-dark">
+          <div class="create-header">
+            <img
+              src="../assets/images/user_avatar/cat.jpg"
+              alt="user_avatar"
+              class="avatar"
+            />
+            <span>What is happening ?</span>
+          </div>
+        </div>
+
         <div class="post bg-dark">
           <div class="post-header">
             <img
@@ -181,49 +146,9 @@
               <h3 class="post-author">Ryo Yamada</h3>
               <p class="post-time">2 hours ago</p>
             </div>
-          </div>
-
-          <div class="post-content">
-            <p>
-              This is a sample post content. It can be a status update, photo,
-              or link shared by the user.
-            </p>
-
-            <img src="../assets/images/Thumbnails-11.png" alt="post" />
-          </div>
-        </div>
-        <div class="post bg-dark">
-          <div class="post-header">
-            <img
-              src="../assets/images/user_avatar/cat.jpg"
-              alt="user_avatar"
-              class="avatar"
-            />
-            <div class="post-info">
-              <h3 class="post-author">Ryo Yamada</h3>
-              <p class="post-time">2 hours ago</p>
-            </div>
-          </div>
-
-          <div class="post-content">
-            <p>
-              This is a sample post content. It can be a status update, photo,
-              or link shared by the user.
-            </p>
-
-            <img src="../assets/images/Thumbnails-11.png" alt="post" />
-          </div>
-        </div>
-        <div class="post bg-dark">
-          <div class="post-header">
-            <img
-              src="../assets/images/user_avatar/cat.jpg"
-              alt="user_avatar"
-              class="avatar"
-            />
-            <div class="post-info">
-              <h3 class="post-author">Ryo Yamada</h3>
-              <p class="post-time">2 hours ago</p>
+            <div class="action">
+              <i class="fa-solid fa-bookmark"></i>
+              <i class="fa-solid fa-x"></i>
             </div>
           </div>
 
@@ -235,33 +160,30 @@
 
             <img src="../assets/images/user_avatar/reze.jpg" alt="post" />
           </div>
-        </div>
-        <div class="post bg-dark">
-          <div class="post-header">
-            <img
-              src="../assets/images/user_avatar/cat.jpg"
-              alt="user_avatar"
-              class="avatar"
-            />
-            <div class="post-info">
-              <h3 class="post-author">Ryo Yamada</h3>
-              <p class="post-time">2 hours ago</p>
+
+          <div class="post-bottom">
+            <div class="left_x">
+              <div class="heart"><i class="fa-solid fa-heart"></i> 100</div>
+              <div class="comment">
+                <i class="fa-solid fa-comment"></i> 1000
+              </div>
             </div>
-          </div>
 
-          <div class="post-content">
-            <p>
-              This is a sample post content. It can be a status update, photo,
-              or link shared by the user.
-            </p>
-
-            <img src="../assets/images/Thumbnails-11.png" alt="post" />
+            <div class="share"><i class="fa-solid fa-share"></i> 50</div>
           </div>
         </div>
       </div>
 
       <!-- RIGHT CONTAINER -->
       <div class="right">
+        <form class="d-flex bg-dark" role="search">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </form>
         <a class="communication_item x">
           <img
             src="../assets/images/user_avatar/hecker.png"

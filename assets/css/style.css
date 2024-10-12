@@ -20,6 +20,18 @@ img {
   max-width: 500px;
   max-height: 500px;
 }
+.form-control {
+  background-color: #343a40; /* Nền tối */
+  color: #ffffff; /* Màu chữ trắng */
+  border-radius: 15px; /* Bo góc 15px */
+  border: none; /* Loại bỏ đường viền mặc định (nếu cần) */
+  padding: 10px; /* Thêm khoảng đệm cho đẹp */
+}
+
+.form-control::placeholder {
+  color: #b5b5b5; /* Màu placeholder nhẹ hơn */
+}
+
 /* ==================================================  */
 .logo_img {
   width: 30px;
@@ -74,8 +86,8 @@ main {
   background-color: #18191a;
   display: flex;
   width: 100%;
-  height: 90vh;
-  max-height: 90vh;
+  height: 100vh;
+  max-height: 100vh;
   gap: 10px;
 }
 /* =============================================================== */
@@ -112,6 +124,7 @@ main {
 }
 
 /* =============================================================== */
+
 .main_container a {
   color: white;
   /* border: 1px solid white; */
@@ -149,6 +162,7 @@ main {
   background-color: #18191a;
   width: 20%;
   color: white;
+  margin-top: 15px;
   /* border: 1px solid white; */
 }
 .main_container .center {
@@ -164,17 +178,27 @@ main {
   overflow-y: auto;
 }
 /* ======================POST=========================== */
-.post {
+.post,
+.create {
+  cursor: pointer;
   border-radius: 15px;
   width: 60%;
   padding: 10px;
   display: block;
   margin-bottom: 20px;
 }
+.post i {
+  font-size: 20px;
+}
+
 .post > * {
   margin-bottom: 20px;
 }
-
+.post .action {
+  margin-left: auto;
+  display: flex;
+  gap: 15px;
+}
 .post .post-header {
   display: flex;
   align-items: center;
@@ -189,9 +213,36 @@ main {
 .post .post-content > * {
   margin-bottom: 20px;
 }
+.create .create-header img,
 .post .post-header img {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
   border-radius: 100%;
+}
+.post .post-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+.left_x {
+  display: flex;
+  gap: 10px;
+}
+.create .create-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.create-header span {
+  /* Nền xám nhạt */
+  color: #f0f0f0; /* Màu chữ hơi trắng */
+  border-radius: 30px; /* Bo góc */
+  padding: 5px 10px; /* Thêm khoảng đệm nếu cần */
+  display: inline-block; /* Đảm bảo border-radius áp dụng chính xác */
+  width: 100%;
+  padding: 10px;
+}
+.create .create-action {
+  display: flex;
+  gap: 10px;
 }
