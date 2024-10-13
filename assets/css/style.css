@@ -5,6 +5,17 @@
   margin: 0px;
   user-select: none;
 }
+.postFORM {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.postFORM textarea {
+  width: 100%;
+  padding: 0; /* Xóa padding mặc định */
+  text-align: center; /* Căn giữa theo chiều ngang */
+  vertical-align: middle;
+}
 .logout:hover {
   color: red;
 }
@@ -25,8 +36,8 @@ body {
   color: gray;
 }
 img {
-  max-width: 700px;
-  max-height: 700px;
+  max-width: 1000px;
+  max-height: 1000px;
 }
 .form-control {
   background-color: #343a40; /* Nền tối */
@@ -195,6 +206,56 @@ main {
   cursor: pointer;
 }
 /* ======================POST=========================== */
+.create_post_form {
+  display: flex; /* Sử dụng Flexbox để sắp xếp các phần tử */
+  align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+  flex-grow: 1;
+  gap: 10px;
+  /* background-color: red; */
+}
+.create_post_form textarea::placeholder {
+  justify-content: center;
+}
+.create_post_form textarea {
+  font-size: 16px;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  padding-top: auto;
+  padding-bottom: auto;
+  color: white;
+  margin-right: 10px; /* Khoảng cách giữa textarea và input */
+  padding: 10px; /* Khoảng cách bên trong */
+  border-radius: 5px; /* Bo góc */
+  border: 1px solid #ccc; /* Đường viền nhẹ */
+  background-color: #f9f9f9; /* Màu nền nhẹ */
+  resize: none; /* Tắt khả năng phóng to và thu nhỏ */
+}
+
+/* Ẩn input file gốc */
+.choose_img {
+  display: none;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+  color: white; /* Màu chữ */
+  border-radius: 4px; /* Bo góc */
+  font-weight: bold; /* Đậm chữ */
+  transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu */
+}
+
+/* ==================CREATE POST ===================== */
+.postsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 .post,
 .create {
   cursor: pointer;
@@ -204,6 +265,12 @@ main {
   display: block;
   margin-bottom: 20px;
 }
+.post {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .post i {
   font-size: 20px;
 }
@@ -225,10 +292,13 @@ main {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   padding: 0px;
   border-bottom: 1px solid rgb(103, 100, 100);
+}
+.post .post-content .post-content-time {
+  margin-right: auto;
 }
 .post .post-content img {
   width: 100%;
@@ -296,18 +366,4 @@ main {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-}
-.navbar {
-  width: 80%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 20px;
-  position: sticky;
-}
-.navbar a {
-  text-decoration: none;
-  color: white; /* Màu xanh đặc trưng của Twitter */
-  font-size: 18px;
-  font-weight: bold;
 }
