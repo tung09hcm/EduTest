@@ -158,49 +158,7 @@
           </div>
         </div>
         <div class="postsContainer" id = "postsContainer">
-          <div class="post bg-dark">
-            <div class="post-header">
-              <img
-                src="../assets/images/user_avatar/cat.jpg"
-                alt="user_avatar"
-                class="avatar"
-              />
-              <div class="post-info">
-                <h3 class="post-author">Ryo Yamada</h3>
-                <p class="post-tag">@ryo_yamada</p>
-              </div>
-              <div class="action">
-                <i class="fa-solid fa-bookmark"></i>
-                <i class="fa-solid fa-x"></i>
-              </div>
-            </div>
 
-            <div class="post-content">
-              <p>
-                This is a sample post content. It can be a status update, photo,
-                or link shared by the user.
-              </p>
-
-              <img src="../assets/images/background.jpg" alt="post" />
-
-              <p class="post-content-time">
-                3:45 AM - Oct 12, 2024 - 59.1M Views
-              </p>
-            </div>
-
-            <div class="post-bottom">
-              <div class="heart"><i class="fa-solid fa-heart"> 100 </i></div>
-              <div class="comment">
-                <i class="fa-solid fa-comment"> 1000 </i>
-              </div>
-              <div class="bookmark">
-                <i class="fa-solid fa-bookmark"> 5000 </i>
-              </div>
-              <div class="share"><i class="fa-solid fa-share"> 50 </i></div>
-            </div>
-
-            <div class="post-comment"></div>
-          </div>
         </div>
       </div>
 

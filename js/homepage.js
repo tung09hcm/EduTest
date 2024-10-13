@@ -23,7 +23,7 @@ function loadPosts() {
     .then((posts) => {
       console.log(posts);
       const postsContainer = document.getElementById("postsContainer");
-
+      postsContainer.innerHTML = "";
       // Đảo ngược mảng để bài đăng mới nằm ở đầu
 
       posts.reverse().forEach((post, index) => {
