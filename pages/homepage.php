@@ -70,7 +70,7 @@
   <body class="bg-dark">
     <div class="main_container">
       <!-- LEFT CONTAINER -->
-      <div class="left">
+      <div class="left" style="border-right: 1px solid rgb(103, 100, 100)">
         <div class="home item" style="color: #22b14c">
           <i class="fa-solid fa-house"></i>
           <h1>Home</h1>
@@ -91,14 +91,9 @@
           <h1>Messages</h1>
         </div>
 
-        <div class="friend item">
-          <i class="fa-solid fa-user"></i>
-          <h1>Friend</h1>
-        </div>
-
-        <div class="folder item">
-          <i class="fa-solid fa-folder"></i>
-          <h1>Your library</h1>
+        <div class="community item">
+          <i class="fa-duotone fa-solid fa-user-group"></i>
+          <h1>Community</h1>
         </div>
 
         <div class="save item">
@@ -116,9 +111,7 @@
             <img src="../assets/images/user_avatar/cat.jpg" alt="user_avatar" />
             <h1>ryo_yamada</h1>
           </a>
-          <button type="submit" class="btn" style="color: red">
-            Đăng xuất
-          </button>
+          <button type="submit" class="btn logout">Logout</button>
         </form>
       </div>
       <!-- CENTER CONTAINER -->
@@ -131,10 +124,9 @@
               alt="user_avatar"
               class="avatar"
             />
-            <span>What is happening ?</span>
+            <span style="color: rgb(103, 100, 100)">What is happening ?</span>
           </div>
         </div>
-
         <div class="post bg-dark">
           <div class="post-header">
             <img
@@ -144,7 +136,7 @@
             />
             <div class="post-info">
               <h3 class="post-author">Ryo Yamada</h3>
-              <p class="post-time">2 hours ago</p>
+              <p class="post-tag">@ryo_yamada</p>
             </div>
             <div class="action">
               <i class="fa-solid fa-bookmark"></i>
@@ -158,25 +150,29 @@
               or link shared by the user.
             </p>
 
-            <img src="../assets/images/user_avatar/reze.jpg" alt="post" />
+            <img src="../assets/images/background.jpg" alt="post" />
+
+            <p class="post-content-time">
+              3:45 AM - Oct 12, 2024 - 59.1M Views
+            </p>
           </div>
 
           <div class="post-bottom">
-            <div class="left_x">
-              <div class="heart"><i class="fa-solid fa-heart"></i> 100</div>
-              <div class="comment">
-                <i class="fa-solid fa-comment"></i> 1000
-              </div>
+            <div class="heart"><i class="fa-solid fa-heart"> 100 </i></div>
+            <div class="comment"><i class="fa-solid fa-comment"> 1000 </i></div>
+            <div class="bookmark">
+              <i class="fa-solid fa-bookmark"> 5000 </i>
             </div>
-
-            <div class="share"><i class="fa-solid fa-share"></i> 50</div>
+            <div class="share"><i class="fa-solid fa-share"> 50 </i></div>
           </div>
+
+          <div class="post-comment"></div>
         </div>
       </div>
 
       <!-- RIGHT CONTAINER -->
       <div class="right">
-        <form class="d-flex bg-dark" role="search">
+        <form class="d-flex" role="search">
           <input
             class="form-control me-2"
             type="search"

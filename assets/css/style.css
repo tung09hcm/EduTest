@@ -5,20 +5,28 @@
   margin: 0px;
   user-select: none;
 }
-.post-author {
-  color: #22b14c;
+.logout:hover {
+  color: red;
 }
-.post-time {
+.logout {
+  color: rgb(103, 100, 100);
+}
+.post-author {
+  color: white;
+}
+.post-tag {
   color: gray;
   font-size: 10px;
 }
 body {
   font-family: "Sora", sans-serif;
 }
-
+.post-content-time {
+  color: gray;
+}
 img {
-  max-width: 500px;
-  max-height: 500px;
+  max-width: 700px;
+  max-height: 700px;
 }
 .form-control {
   background-color: #343a40; /* Nền tối */
@@ -176,13 +184,22 @@ main {
   color: white;
   /* border: 1px solid white; */
   overflow-y: auto;
+  position: relative;
+}
+.main_container .center .go_back {
+  position: absolute;
+  left: 10px;
+  border-radius: 100%;
+  padding: 10px;
+  font-size: 24px;
+  cursor: pointer;
 }
 /* ======================POST=========================== */
 .post,
 .create {
   cursor: pointer;
   border-radius: 15px;
-  width: 60%;
+  width: 80%;
   padding: 10px;
   display: block;
   margin-bottom: 20px;
@@ -207,8 +224,16 @@ main {
 .post .post-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  width: 100%;
+  padding: 0px;
+  border-bottom: 1px solid rgb(103, 100, 100);
+}
+.post .post-content img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 30px;
 }
 .post .post-content > * {
   margin-bottom: 20px;
@@ -221,12 +246,12 @@ main {
   border-radius: 100%;
 }
 .post .post-bottom {
+  margin: 0px 10px;
   display: flex;
   justify-content: space-between;
 }
-.left_x {
-  display: flex;
-  gap: 10px;
+.post .post-bottom i {
+  font-size: medium;
 }
 .create .create-header {
   display: flex;
@@ -245,4 +270,44 @@ main {
 .create .create-action {
   display: flex;
   gap: 10px;
+}
+/* ============================ POST COMMENT ============================= */
+.post-comment {
+  display: flex;
+  flex-direction: column;
+}
+.post-comment .user_comment {
+  border-bottom: 1px solid gray;
+  border-top: 1px solid gray;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+}
+.post-comment .user_comment .reply {
+  margin-left: auto;
+}
+.post-comment .user_comment .comment-top {
+  display: flex;
+}
+
+.user_comment.other {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.navbar {
+  width: 80%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 20px;
+  position: sticky;
+}
+.navbar a {
+  text-decoration: none;
+  color: white; /* Màu xanh đặc trưng của Twitter */
+  font-size: 18px;
+  font-weight: bold;
 }
