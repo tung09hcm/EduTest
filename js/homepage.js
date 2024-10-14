@@ -6,6 +6,7 @@ let id_;
 let file_path_;
 window.onload = loadPosts;
 // Lấy username từ server
+// -> lí do là ko bt cách lấy biến session nên phải chuyển về json r gửi thông qua get_user_in4.php
 fetch("../include/get_user_in4.php")
   .then((response) => response.json())
   .then((data) => {
