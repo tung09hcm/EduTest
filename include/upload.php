@@ -20,6 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Lưu bài viết vào file JSON
     $post = [
+        'username' => $_SESSION["username"],
+        'name' => $_SESSION["name"],
         'content' => $content,
         'image' => $imagePath,
         'time' => $currentTime,

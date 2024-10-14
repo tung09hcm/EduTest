@@ -1,3 +1,21 @@
+// function to get post data and write it in posts.json
+function fetchPosts() {
+  fetch("../include/fetch_post.php") // Đường dẫn đến file PHP
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json(); // Mong đợi phản hồi dưới dạng JSON
+    })
+    .then((data) => {
+      console.log(data); // Xử lý dữ liệu trả về từ PHP
+      displayPosts(data); // Gọi hàm để hiển thị bài viết
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+}
+
 // Variables
 let username_; // Lưu giá trị username
 let name_;
@@ -5,6 +23,7 @@ let email_;
 let id_;
 let file_path_;
 window.onload = loadPosts;
+
 // Lấy username từ server
 // -> lí do là ko bt cách lấy biến session nên phải chuyển về json r gửi thông qua get_user_in4.php
 fetch("../include/get_user_in4.php")

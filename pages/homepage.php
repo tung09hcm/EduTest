@@ -216,6 +216,7 @@
         </a>
       </div>
     </div>
+    
     <script src="../js/homepage.js"></script>
     <script
       src="https://kit.fontawesome.com/55709266d7.js"
