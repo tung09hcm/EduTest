@@ -1,3 +1,26 @@
+// Variables
+let username_; // Lưu giá trị username
+let name_;
+let email_;
+let id_;
+let file_path_;
+window.onload = loadPosts;
+// Lấy username từ server
+fetch("../include/get_user_in4.php")
+  .then((response) => response.json())
+  .then((data) => {
+    username_ = data.username; // Lưu giá trị username
+    name_ = data.name;
+    email_ = data.email;
+    id_ = data.id;
+    file_path_ = data.file_path;
+
+    console.log(username_);
+    console.log(name_);
+    console.log(email_);
+  })
+  .catch((error) => console.error("Error fetching username:", error));
+
 // Lắng nghe sự kiện submit của form
 document
   .getElementById("postForm")
@@ -11,7 +34,9 @@ document
     })
       .then((response) => response.text())
       .then((data) => {
-        loadPosts(); // Tải lại danh sách bài viết
+        setTimeout(() => {
+          loadPosts(); // Tải lại danh sách bài viết sau 1 giây
+        }, 1000);
         this.reset(); // Reset form
       })
       .catch((error) => console.error("Error:", error));
@@ -19,7 +44,7 @@ document
 
 // Hàm tải các bài viết từ file JSON
 function loadPosts() {
-  fetch("../include/posts.json")
+  fetch(`../include/posts.json?t=${new Date().getTime()}`)
     .then((response) => response.json())
     .then((posts) => {
       const postsContainer = document.getElementById("postsContainer");
@@ -33,16 +58,20 @@ function loadPosts() {
         // Tạo nội dung cho bài viết
         postDiv.innerHTML = `
               <div class="post-header">
-                  <img src="../assets/images/user_avatar/cat.jpg" alt="user_avatar" class="avatar" />
+                  <img src="${file_path_}" alt="user_avatar" class="avatar" />
                   <div class="post-info">
-                      <h3 class="post-author">Ryo Yamada</h3>
-                      <p class="post-tag">@ryo_yamada</p>
+                      <h3 class="post-author">${name_}</h3>
+                      <p class="post-tag">@${username_}</p>
                   </div>
                   <div class="action">
-                      <button class="btn" data-index="${index}">
+                      <button class="btn" data-index="${
+                        posts.length - 1 - index
+                      }">
                           <i class="fa-solid fa-bookmark" style="color: white"></i>
                       </button>  
-                      <button class="btn delete-btn" data-index="${index}">
+                      <button class="btn delete-btn" data-index="${
+                        posts.length - 1 - index
+                      }">
                           <i class="fa-solid fa-x" style="color: white"></i>
                       </button>  
                   </div>
@@ -66,6 +95,11 @@ function loadPosts() {
       });
     })
     .catch((error) => console.error("Error loading posts:", error));
+
+  // Xử lý css cho textarea tạo bảng
+  const textarea = document.getElementById("content_");
+  textarea.style.height = "auto"; // Đặt lại chiều cao về auto
+  // textarea.style.height = "0px"; // Hoặc để chiều cao về 0 nếu bạn muốn ẩn nó
 }
 
 // Hàm xóa bài viết dựa trên chỉ số index

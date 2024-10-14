@@ -13,20 +13,20 @@
             $email = $_SESSION["email"];
             $file_path = $_SESSION["file_path"];
 
-            $post = [
-              'username' => $_SESSION["username"],
-              'name' => $_SESSION["name"],
-              'id' => $_SESSION["id"],
-              'email' => $_SESSION["email"],
-              'file_path' => $_SESSION["file_path"],
-            ];
+            // $post = [
+            //   'username' => $_SESSION["username"],
+            //   'name' => $_SESSION["name"],
+            //   'id' => $_SESSION["id"],
+            //   'email' => $_SESSION["email"],
+            //   'file_path' => $_SESSION["file_path"],
+            // ];
             
-            $posts = [];
-            if (file_exists('user.json')) {
-                $posts = json_decode(file_get_contents('user.json'), true);
-            }
-            $posts[] = $post;
-            file_put_contents('user.json', json_encode($posts));
+            // $posts = [];
+            // if (file_exists('user.json')) {
+            //     $posts = json_decode(file_get_contents('user.json'), true);
+            // }
+            // $posts[] = $post;
+            // file_put_contents('user.json', json_encode($posts));
 
         } else {
             header("Location: error.html");
@@ -121,7 +121,7 @@
         <div class="create bg-dark">
           <div class="create-header">
             <img
-              src="../assets/images/user_avatar/cat.jpg"
+              src="<?php echo $_SESSION['file_path']; ?>"
               alt="user_avatar"
               class="avatar"
             />
@@ -132,15 +132,22 @@
               enctype="multipart/form-data"
               class="create_post_form"
             >
-              <textarea
-                id="content"
-                name="content"
-                placeholder="What is happening..."
-                required
-                class="bg-dark"
-                style="border: none"
-              ></textarea>
-              <!-- <div class="file-upload"> -->
+            <textarea
+              id="content_"
+              name="content"
+              placeholder="What is happening..."
+              required
+              class="bg-dark"
+              style="border: none; width: 100%; color: white; outline: none; resize: none; overflow: hidden; white-space: pre-wrap;"
+            ></textarea>
+
+              <script>
+                const textarea = document.getElementById('content_');
+                textarea.addEventListener('input', function () {
+                  this.style.height = 'auto';
+                  this.style.height = this.scrollHeight + 'px'; // Mở rộng chiều cao theo nội dung
+                });
+              </script>
 
               <label for="image" class="custom-file-upload">
                 <i class="fa-solid fa-image" style="font-size: 20px"></i>

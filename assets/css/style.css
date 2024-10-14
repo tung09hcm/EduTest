@@ -5,6 +5,13 @@
   margin: 0px;
   user-select: none;
 }
+p {
+  word-wrap: break-word; /* Cho phép ngắt từ nếu quá dài */
+  overflow-wrap: break-word; /* Ngắt từ nếu từ quá dài */
+  max-width: 100%; /* Đảm bảo chiều rộng không vượt quá container */
+  white-space: normal; /* Ngăn việc giữ các từ trên một dòng */
+  overflow: hidden; /* Ẩn nội dung tràn nếu cần */
+}
 .postFORM {
   display: flex;
   gap: 5px;
@@ -287,6 +294,13 @@ main {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+.post .post-content p {
+  word-wrap: break-word; /* Cho phép ngắt từ nếu quá dài */
+  overflow-wrap: break-word; /* Ngắt từ nếu từ quá dài */
+  max-width: 100%; /* Đảm bảo chiều rộng không vượt quá container */
+  white-space: normal; /* Ngăn việc giữ các từ trên một dòng */
+  overflow: hidden; /* Ẩn nội dung tràn nếu cần */
 }
 .post .post-content {
   display: flex;
