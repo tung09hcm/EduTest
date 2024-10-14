@@ -37,57 +37,91 @@ session_start();
     <link rel="stylesheet" href="../assets/css/reset.css" />
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <style>
+      /* General styles */
+      body {
+        background-color: #343a40; /* bg-dark */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+      }
+
+      form {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 100%;
+      }
+
+      /* Form fields */
+      .form-label {
+        font-weight: bold;
+        color: white;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+
+      input[type="text"]:focus,
+      input[type="email"]:focus,
+      input[type="password"]:focus {
+        outline: none;
+        border-color: #28a745;
+      }
+
+      /* File upload */
+      .custom-file-upload {
+        display: block;
+        margin-bottom: 10px;
+        color: white;
+        cursor: pointer;
+      }
+
+      input.choose_img {
+        display: none;
+      }
+
+      .custom-file-upload i {
+        font-size: 16px;
+        color: white;
+        margin-right: 5px;
+      }
+
+      /* Action buttons */
+      .action {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .register_hyperlink {
+        text-decoration: none;
+        font-size: 14px;
+      }
+
+      .register_hyperlink:hover {
+        text-decoration: underline;
+      }
+
+
+    </style>
   </head>
-  <body class="bg-dark">
-    <nav
-      class="navbar navbar-expand-lg bg-dark navbar-dark py-3"
-      data-bs-theme="dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="../index.php">
-          <img
-            src="../assets/images/Thumbnails-11.png"
-            alt="EduTest Logo"
-            class="logo_img"
-          />
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="../index.php"
-                >EduTest</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Flashcard</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Class</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Test</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Notification</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-        </div>
-      </div>
-    </nav>
+  <body class="bg-dark" 
+  style="display: flex; align-items: center; justify-content: center; height: 100vh;">
 
     <main class="bg-dark">
       <section
@@ -100,7 +134,7 @@ session_start();
         <div class="container left text-center mt-5 register">
           <h2 class="mb-4">Đăng Ký Tài Khoản</h2>
 
-          <form action="../include/log.php" method="post">
+          <form action="../include/log.php" method="post" class = "bg-dark" enctype="multipart/form-data">
             <div class="mb-3 text-start">
               <label for="fullname" class="form-label">Tên đăng nhập</label>
               <input
@@ -157,10 +191,22 @@ session_start();
                 required
               />
             </div>
+            <label for="image" class="custom-file-upload btn btn-outline-secondary">
+                <i class="fa-solid fa-image">Upload your image</i>
+            </label>
+            <input
+              class="choose_img"
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+            />
             <div class="action">
               <a href="#" class="register_hyperlink" id="login_x"
                 >Already have an account? Login ?</a
               >
+
+
               <input
                 type="submit"
                 class="btn btn-success"
@@ -173,10 +219,10 @@ session_start();
           </form>
         </div>
 
-        <div class="container left text-center mt-5 login">
+        <div class="container left text-center mt-5 login" >
           <h2 class="mb-4">Đăng Nhập</h2>
 
-          <form action="../include/log.php" method="post">
+          <form action="../include/log.php" method="post" class = "bg-dark">
             <div class="mb-3 text-start">
               <label for="username" class="form-label">Tên người dùng</label>
               <input

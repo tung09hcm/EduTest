@@ -36,64 +36,8 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="stylesheet" href="./assets/css/responsive.css" />
   </head>
-  <body class="bg-dark">
-    <nav
-      class="navbar navbar-expand-lg bg-dark navbar-dark py-3"
-      data-bs-theme="dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img
-            src="./assets/images/Thumbnails-11.png"
-            alt="EduTest Logo"
-            class="logo_img"
-          />
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#"
-                >EduTest</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="./pages/login.php"
-                >Flashcard</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="./pages/login.php"
-                >Class</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="./pages/login.php"
-                >Test</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="./pages/login.php"
-                >Notification</a
-              >
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-        </div>
-      </div>
-    </nav>
+  <body class="bg-dark" 
+  style="display: flex; align-items: center; justify-content: center; height: 100vh;">
 
     <main class="bg-dark container">
       <section

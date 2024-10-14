@@ -12,12 +12,29 @@
     $_SESSION["name"] = $_POST["name"];
     $_SESSION["email"] = $_POST["email"];
     $_SESSION["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
+
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+      $targetDir = "../assets/images/user_avatar/";
+
+      // Tạo mã ID hash duy nhất cho tệp tin
+      $uniqueId = substr(uniqid(), -8);; // Tạo một ID duy nhất dựa trên thời gian hiện tại
+      $imagePath = $targetDir . $uniqueId . '.png'; // Tạo đường dẫn tệp tin với ID
+
+      // Di chuyển tệp đã tải lên đến thư mục đích với tên mới
+      move_uploaded_file($_FILES['image']['tmp_name'], $imagePath);
+      $_SESSION["file_path"] = $imagePath;
+    }
+    else {
+      echo "<script>alert('signal');</script>";
+    }
+  
     // $_SESSION["password"] = $_POST["password"];
-    $sql = "INSERT INTO user (username, name, email, password) 
+    $sql = "INSERT INTO user (username, name, email, password, file_path) 
             VALUES ('" . $_SESSION["username"] . "', 
                     '" . $_SESSION["name"] . "', 
                     '" . $_SESSION["email"] . "', 
-                    '" . $_SESSION["password"] . "')";
+                    '" . $_SESSION["password"] . "', 
+                    '" . $imagePath . "')";
 
     try{
       mysqli_query($conn, $sql);
@@ -27,7 +44,10 @@
       echo " cant register !!!";
     }
     $conn->close();
+
     $_SESSION["login"] = true;
+
+
     // Chuyển hướng tới homepage.php sau khi đăng nhập thành công
     header("Location: ../pages/homepage.php");
     exit(); // Đảm bảo rằng không có mã nào được thực thi sau chuyển hướng
@@ -54,6 +74,10 @@
         if (password_verify($password, $row['password'])) {
             // Mật khẩu đúng, lưu thông tin vào session
             $_SESSION["username"] = $username;
+            $_SESSION["name"] = $row['name'];
+            $_SESSION["id"] = $row['id'];
+            $_SESSION["email"] = $row['email'];
+            $_SESSION["file_path"] = $row['file_path'];
             $_SESSION["login"] = true;
             // Chuyển hướng tới trang chính
             header("Location: ../pages/homepage.php");
@@ -71,6 +95,10 @@
         header("Location: ../pages/login.php"); // Quay lại trang đăng nhập
         exit();
     }
+
+
+
+
     // Đóng kết nối
     $stmt->close();
     $conn->close();
@@ -78,5 +106,6 @@
     
   }
 
-  
+
+
 ?>

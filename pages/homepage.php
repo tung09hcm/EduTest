@@ -8,25 +8,26 @@
         // Kiểm tra xem người dùng đã đăng nhập chưa
         if (isset($_SESSION["username"])) {
             $username = $_SESSION["username"];
+            $name = $_SESSION["name"];
+            $id = $_SESSION["id"];
+            $email = $_SESSION["email"];
+            $file_path = $_SESSION["file_path"];
 
-            // Sử dụng prepared statement để tránh SQL Injection
-            $stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
-            $stmt->bind_param("s", $username);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            // Kiểm tra xem có kết quả trả về không
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $name = $row['name'];  // Lấy tên người dùng từ cơ sở dữ liệu
-                echo "Xin chào, " . htmlspecialchars($name) . "!";
-            } else {
-                echo "Không tìm thấy thông tin người dùng.";
+            $post = [
+              'username' => $_SESSION["username"],
+              'name' => $_SESSION["name"],
+              'id' => $_SESSION["id"],
+              'email' => $_SESSION["email"],
+              'file_path' => $_SESSION["file_path"],
+            ];
+            
+            $posts = [];
+            if (file_exists('user.json')) {
+                $posts = json_decode(file_get_contents('user.json'), true);
             }
+            $posts[] = $post;
+            file_put_contents('user.json', json_encode($posts));
 
-            // Đóng kết nối
-            $stmt->close();
-            $conn->close();
         } else {
             header("Location: error.html");
             exit();
@@ -108,8 +109,8 @@
           class="d-flex logout_homepage"
         >
           <a class="communication_item self">
-            <img src="../assets/images/user_avatar/cat.jpg" alt="user_avatar" />
-            <h1>ryo_yamada</h1>
+            <img src="<?php echo $_SESSION['file_path']; ?>" alt="user_avatar" />
+            <h1><?php echo $_SESSION['name']; ?></h1>
           </a>
           <button type="submit" class="btn logout">Logout</button>
         </form>
