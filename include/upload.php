@@ -2,7 +2,8 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content = $_POST['content'];
     $imagePath = '';
-
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
+    $currentTime = date("g:i A - M j, Y");
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $targetDir = "../uploads/";
 
@@ -22,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $post = [
         'content' => $content,
         'image' => $imagePath,
+        'time' => $currentTime,
     ];
 
     $posts = [];
