@@ -22,24 +22,34 @@ let name_;
 let email_;
 let id_;
 let file_path_;
-window.onload = loadPosts;
+window.onload = async function () {
+  await getUserInfo(); // Đợi lấy thông tin người dùng
+  loadPosts(); // Sau đó tải bài viết
+};
 
 // Lấy username từ server
 // -> lí do là ko bt cách lấy biến session nên phải chuyển về json r gửi thông qua get_user_in4.php
-fetch("../include/get_user_in4.php")
-  .then((response) => response.json())
-  .then((data) => {
-    username_ = data.username; // Lưu giá trị username
-    name_ = data.name;
-    email_ = data.email;
-    id_ = data.id;
-    file_path_ = data.file_path;
 
-    console.log(username_);
-    console.log(name_);
-    console.log(email_);
-  })
-  .catch((error) => console.error("Error fetching username:", error));
+async function getUserInfo() {
+  try {
+    const response = await fetch("../include/get_user_in4.php");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    const userInfo = {
+      username: data.username, // Lưu giá trị username
+      name: data.name,
+      email: data.email,
+      id: data.id,
+      file_path: data.file_path,
+    };
+    return userInfo;
+  } catch (error) {
+    console.error("Error fetching user info:", error);
+    throw error; // Ném lại lỗi nếu có
+  }
+}
 
 // Lắng nghe sự kiện submit của form
 document
@@ -63,63 +73,68 @@ document
   });
 
 // Hàm tải các bài viết từ file JSON
-function loadPosts() {
-  fetch(`../include/posts.json?t=${new Date().getTime()}`)
-    .then((response) => response.json())
-    .then((posts) => {
-      const postsContainer = document.getElementById("postsContainer");
-      postsContainer.innerHTML = ""; // Xóa nội dung cũ
+async function loadPosts() {
+  try {
+    const userInfo = await getUserInfo(); // Đợi cho userInfo được lấy
+    id_ = userInfo.id; // Gán id_ sau khi đã lấy được userInfo
+    console.log("loadPosts: " + id_ + ".json\n");
 
-      // Đảo ngược mảng để bài đăng mới nằm ở đầu
-      posts.reverse().forEach((post, index) => {
-        const postDiv = document.createElement("div");
-        postDiv.classList.add("post", "bg-dark");
+    const response = await fetch(
+      `../include/${id_}.json?t=${new Date().getTime()}`
+    );
+    const posts = await response.json();
 
-        // Tạo nội dung cho bài viết
-        postDiv.innerHTML = `
-              <div class="post-header">
-                  <img src="${file_path_}" alt="user_avatar" class="avatar" />
-                  <div class="post-info">
-                      <h3 class="post-author">${name_}</h3>
-                      <p class="post-tag">@${username_}</p>
-                  </div>
-                  <div class="action">
-                      <button class="btn" data-index="${
-                        posts.length - 1 - index
-                      }">
-                          <i class="fa-solid fa-bookmark" style="color: white"></i>
-                      </button>  
-                      <button class="btn delete-btn" data-index="${
-                        posts.length - 1 - index
-                      }">
-                          <i class="fa-solid fa-x" style="color: white"></i>
-                      </button>  
-                  </div>
-              </div>
+    const postsContainer = document.getElementById("postsContainer");
+    postsContainer.innerHTML = ""; // Xóa nội dung cũ
 
-              <div class="post-content">
-                  <p>${post.content}</p>
-                  ${post.image ? `<img src="${post.image}" alt="post" />` : ""}
-                  <p class="post-content-time">${post.time}</p>
-              </div>
+    // Đảo ngược mảng để bài đăng mới nằm ở đầu
+    posts.reverse().forEach((post, index) => {
+      const postDiv = document.createElement("div");
+      postDiv.classList.add("post", "bg-dark");
 
-              <div class="post-bottom">
-                  <div class="heart"><i class="fa-solid fa-heart"> 0 </i></div>
-                  <div class="comment"><i class="fa-solid fa-comment"> 0 </i></div>
-                  <div class="bookmark"><i class="fa-solid fa-bookmark"> 0 </i></div>
-                  <div class="share"><i class="fa-solid fa-share"> 0 </i></div>
-              </div>
-          `;
+      // Tạo nội dung cho bài viết
+      postDiv.innerHTML = `
+        <div class="post-header">
+          <img src="${post.user_img_path}" alt="user_avatar" class="avatar" />
+          <div class="post-info">
+            <h3 class="post-author">${post.name}</h3>
+            <p class="post-tag">@${post.username}</p>
+          </div>
+          <div class="action">
+            <button class="btn" data-index="${posts.length - 1 - index}">
+              <i class="fa-solid fa-bookmark" style="color: white"></i>
+            </button>
+            <button class="btn delete-btn" data-index="${
+              posts.length - 1 - index
+            }">
+              <i class="fa-solid fa-x" style="color: white"></i>
+            </button>
+          </div>
+        </div>
 
-        postsContainer.appendChild(postDiv);
-      });
-    })
-    .catch((error) => console.error("Error loading posts:", error));
+        <div class="post-content">
+          <p>${post.content}</p>
+          ${post.image ? `<img src="${post.image}" alt="post" />` : ""}
+          <p class="post-content-time">${post.time}</p>
+        </div>
 
-  // Xử lý css cho textarea tạo bảng
-  const textarea = document.getElementById("content_");
-  textarea.style.height = "auto"; // Đặt lại chiều cao về auto
-  // textarea.style.height = "0px"; // Hoặc để chiều cao về 0 nếu bạn muốn ẩn nó
+        <div class="post-bottom">
+          <div class="heart"><i class="fa-solid fa-heart"> 0 </i></div>
+          <div class="comment"><i class="fa-solid fa-comment"> 0 </i></div>
+          <div class="bookmark"><i class="fa-solid fa-bookmark"> 0 </i></div>
+          <div class="share"><i class="fa-solid fa-share"> 0 </i></div>
+        </div>
+      `;
+
+      postsContainer.appendChild(postDiv);
+    });
+
+    // Xử lý css cho textarea tạo bảng
+    const textarea = document.getElementById("content_");
+    textarea.style.height = "auto"; // Đặt lại chiều cao về auto
+  } catch (error) {
+    console.error("Error loading posts:", error);
+  }
 }
 
 // Hàm xóa bài viết dựa trên chỉ số index
@@ -156,6 +171,3 @@ document
       deletePost(postIndex); // Gọi hàm deletePost với chỉ số của bài viết
     }
   });
-
-// Tải các bài viết khi trang được tải
-loadPosts();

@@ -13,20 +13,6 @@
             $email = $_SESSION["email"];
             $file_path = $_SESSION["file_path"];
 
-            // $post = [
-            //   'username' => $_SESSION["username"],
-            //   'name' => $_SESSION["name"],
-            //   'id' => $_SESSION["id"],
-            //   'email' => $_SESSION["email"],
-            //   'file_path' => $_SESSION["file_path"],
-            // ];
-            
-            // $posts = [];
-            // if (file_exists('user.json')) {
-            //     $posts = json_decode(file_get_contents('user.json'), true);
-            // }
-            // $posts[] = $post;
-            // file_put_contents('user.json', json_encode($posts));
 
         } else {
             header("Location: error.html");
@@ -67,6 +53,31 @@
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="stylesheet" href="../assets/css/responsive.css" />
     <link rel="stylesheet" href="../assets/css/flashcard_item.css" />
+
+
+    <script>
+
+      function fetchPosts() {
+        console.log("Initial fetch Posts stage 2 !!!")
+
+        fetch("../include/fetch_post.php") // Đường dẫn đến file PHP
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json(); // Mong đợi phản hồi dưới dạng JSON
+          })
+          .then((data) => {
+            console.log(data); // Xử lý dữ liệu trả về từ PHP
+          })
+          .catch((error) => {
+            console.error("There was a problem with the fetch operation:", error);
+          });
+      }
+      console.log("Initial fetch Posts!!!")
+      document.addEventListener('DOMContentLoaded', fetchPosts);
+
+    </script>   
   </head>
   <body class="bg-dark">
     <div class="main_container">
@@ -166,8 +177,10 @@
           </div>
         </div>
         <div class="postsContainer" id = "postsContainer">
-
         </div>
+        <button type="button" class="btn btn-outline-success" style = "color: green" id = "load_more">
+          Load more
+        </button>
       </div>
 
       <!-- RIGHT CONTAINER -->
@@ -217,6 +230,10 @@
       </div>
     </div>
     
+
+
+         
+
     <script src="../js/homepage.js"></script>
     <script
       src="https://kit.fontawesome.com/55709266d7.js"

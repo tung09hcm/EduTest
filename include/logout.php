@@ -1,14 +1,16 @@
 <?php
 session_start();
+
+$filename = $_SESSION["id"] . ".json";
+
 session_unset();
 session_destroy(); // Hủy session
 
-$file = '../include/posts.json';
-if (file_exists($file)) {
-    unlink($file); // Xóa file
+if (file_exists($filename)) {
+    unlink($filename); // Xóa file
 }
 
-$file_user = '../pages/user.json';
+$file_user = '../pages/debug.json';
 if (file_exists($file_user)) {
     unlink($file_user); // Xóa file
 }
