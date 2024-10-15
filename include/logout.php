@@ -1,10 +1,16 @@
 <?php
+include("../include/database.php");
 session_start();
-
 $filename = $_SESSION["id"] . ".json";
+$updateStmt = $conn->prepare("UPDATE user SET online = 0 WHERE username = ?");
+$updateStmt->bind_param("s", $_SESSION["username"]);
+$updateStmt->execute();
+$updateStmt->close();
+$conn->close();
 
 session_unset();
 session_destroy(); // Hủy session
+
 
 if (file_exists($filename)) {
     unlink($filename); // Xóa file

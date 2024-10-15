@@ -45,6 +45,7 @@ body {
 img {
   max-width: 1000px;
   max-height: 1000px;
+  object-fit: cover;
 }
 .form-control {
   background-color: #343a40; /* Nền tối */

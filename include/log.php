@@ -38,6 +38,11 @@
 
     try{
       mysqli_query($conn, $sql);
+      // $_SESSION["login"] = true;
+      // $updateStmt = $conn->prepare("UPDATE user SET online = 1 WHERE username = ?");
+      // $updateStmt->bind_param("s", $_POST["username"]);
+      // $updateStmt->execute();
+      // $updateStmt->close();
     }
     catch(mysqli_sql_exception)
     {
@@ -45,11 +50,10 @@
     }
     $conn->close();
 
-    $_SESSION["login"] = true;
 
 
-    // Chuyển hướng tới homepage.php sau khi đăng nhập thành công
-    header("Location: ../pages/homepage.php");
+    // Chuyển hướng tới login.php sau khi đăng nhập thành công
+    header("Location: ../pages/login.php");
     exit(); // Đảm bảo rằng không có mã nào được thực thi sau chuyển hướng
   }
   else if (isset($_POST["login"])) {
@@ -71,7 +75,7 @@
         $row = $result->fetch_assoc();
         
         // Kiểm tra mật khẩu bằng password_verify
-        if (password_verify($password, $row['password'])) {
+        if (password_verify($password, $row['password']) && $row['online'] == 0) {
             // Mật khẩu đúng, lưu thông tin vào session
             $_SESSION["username"] = $username;
             $_SESSION["name"] = $row['name'];
@@ -79,6 +83,12 @@
             $_SESSION["email"] = $row['email'];
             $_SESSION["file_path"] = $row['file_path'];
             $_SESSION["login"] = true;
+
+            $updateStmt = $conn->prepare("UPDATE user SET online = 1 WHERE username = ?");
+            $updateStmt->bind_param("s", $username);
+            $updateStmt->execute();
+            $updateStmt->close();
+
             // Chuyển hướng tới trang chính
             header("Location: ../pages/homepage.php");
             exit();

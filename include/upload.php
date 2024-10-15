@@ -76,21 +76,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $conn->close();
-    $debug = [
-        'username' => $_SESSION["username"],
-        'name' => $_SESSION["name"],
-        'content' => $content,
-        'image' => $imagePath,
-        'time' => $currentTime,
-    ];
-    $_SESSION["content"] = $content;
-    $debugs = [];
-    // ghi thêm vào file debugs.json
-    // if (file_exists('debugs.json')) {
-    //     $debugs = json_decode(file_get_contents('debugs.json'), true);
-    // }
-    $debugs[] = $debug;
-    file_put_contents('debugs.json', json_encode($debugs, JSON_PRETTY_PRINT));
 
 }
 
