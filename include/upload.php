@@ -36,6 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'comment' => 0,
         'bookmark' => 0,
         'share' => 0,
+        'react_action' => 0,
+        'bookmark_action' => 0,
     ];
     $_SESSION["content"] = $content;
     $filename = $_SESSION["id"] . ".json";

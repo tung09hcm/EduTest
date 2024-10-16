@@ -107,18 +107,27 @@ async function loadPosts() {
         </div>
 
         <div class="post-bottom">
-          <div class="heart"><i class="fa-solid fa-heart"  style = "font-size: 16px; color: white"> ${
-            post.react
-          } </i></div>
+
+          ${
+            post.react_action == 1
+              ? `<div class="heart"><i class="fa-solid fa-heart" style="font-size: 16px; color: #22B14C"> ${post.react} </i></div>`
+              : `<div class="heart"><i class="fa-solid fa-heart"  style = "font-size: 16px; color: white"> ${post.react} </i></div>`
+          }
+
           <div class="comment"><i class="fa-solid fa-comment"  style = "font-size: 16px; color: white"> ${
             post.comment
           } </i></div>
-          <div class="bookmark"><i class="fa-solid fa-bookmark"  style = "font-size: 16px; color: white"> ${
-            post.bookmark
-          } </i></div>
+
+          ${
+            post.bookmark_action == 1
+              ? `<div class="bookmark"><i class="fa-solid fa-bookmark" style="font-size: 16px; color: #22B14C"> ${post.bookmark} </i></div>`
+              : `<div class="bookmark"><i class="fa-solid fa-bookmark"  style = "font-size: 16px; color: white"> ${post.bookmark} </i></div>`
+          }
+
           <div class="share"><i class="fa-solid fa-share"  style = "font-size: 16px; color: white"> ${
             post.share
           } </i></div>
+
         </div>
       `;
 
