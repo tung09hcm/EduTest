@@ -74,7 +74,15 @@ async function loadPosts() {
     posts.reverse().forEach((post, index) => {
       const postDiv = document.createElement("div");
       postDiv.classList.add("post", "bg-dark");
-
+      postDiv.setAttribute("data-index", posts.length - 1 - index); // Thêm tên vào thuộc tính data-name
+      postDiv.setAttribute("data-name", post.name); // Thêm tên vào thuộc tính data-name
+      postDiv.setAttribute("data-user_img_path", post.user_img_path);
+      postDiv.setAttribute("data-username", post.username);
+      postDiv.setAttribute("data-content", post.content); // Thêm nội dung vào thuộc tính data-content
+      postDiv.setAttribute("data-time", post.time); // Thêm thời gian vào thuộc tính data-time
+      if (post.image) {
+        postDiv.setAttribute("data-img", post.image); // Thêm thuộc tính data-img
+      }
       // Tạo nội dung cho bài viết
       postDiv.innerHTML = `
         <div class="post-header">
@@ -84,9 +92,6 @@ async function loadPosts() {
             <p class="post-tag">@${post.username}</p>
           </div>
           <div class="action">
-            <button class="btn" data-index="${posts.length - 1 - index}">
-              <i class="fa-solid fa-bookmark" style="color: white"></i>
-            </button>
             <button type="button" class="btn delete-btn" data-index="${
               posts.length - 1 - index
             }">
@@ -102,10 +107,18 @@ async function loadPosts() {
         </div>
 
         <div class="post-bottom">
-          <div class="heart"><i class="fa-solid fa-heart"> 0 </i></div>
-          <div class="comment"><i class="fa-solid fa-comment"> 0 </i></div>
-          <div class="bookmark"><i class="fa-solid fa-bookmark"> 0 </i></div>
-          <div class="share"><i class="fa-solid fa-share"> 0 </i></div>
+          <div class="heart"><i class="fa-solid fa-heart"  style = "font-size: 16px; color: white"> ${
+            post.react
+          } </i></div>
+          <div class="comment"><i class="fa-solid fa-comment"  style = "font-size: 16px; color: white"> ${
+            post.comment
+          } </i></div>
+          <div class="bookmark"><i class="fa-solid fa-bookmark"  style = "font-size: 16px; color: white"> ${
+            post.bookmark
+          } </i></div>
+          <div class="share"><i class="fa-solid fa-share"  style = "font-size: 16px; color: white"> ${
+            post.share
+          } </i></div>
         </div>
       `;
 
@@ -121,7 +134,6 @@ async function loadPosts() {
   }
 }
 
-// Hàm xóa bài viết dựa trên chỉ số index
 // Hàm xóa bài viết dựa trên chỉ số index
 function deletePost(index) {
   // Ngăn không cho trang tải lại nếu sự kiện xảy ra trong form hoặc liên kết
@@ -149,10 +161,42 @@ document
     // Ngăn chặn hành động mặc định
     event.preventDefault();
 
-    const icon = event.target.closest("i.fa-solid");
+    const icon = event.target.closest("i");
     if (icon) {
-      // Thay đổi màu biểu tượng
-      icon.style.color = icon.style.color === "white" ? "#22B14C" : "white";
+      // icon.style.color = icon.style.color === "white" ? "#22B14C" : "white";
+      // Kiểm tra loại nút bấm và gọi hàm cập nhật
+      const post = icon.closest(".post");
+      const postIndex = post.getAttribute("data-index");
+      const type = icon.classList.contains("fa-heart")
+        ? "heart"
+        : icon.classList.contains("fa-comment")
+        ? "comment"
+        : icon.classList.contains("fa-bookmark")
+        ? "bookmark"
+        : icon.classList.contains("fa-share")
+        ? "share"
+        : null;
+
+      if (type != "comment" && type != "share") {
+        let currentValue = parseInt(icon.textContent.trim()) || 0; // Lấy giá trị hiện tại và chuyển thành số
+        console.log("type", type);
+        console.log("color before : ", icon.style.color);
+        // Kiểm tra trạng thái màu của biểu tượng
+        if (icon.style.color === "white") {
+          // Nếu màu hiện tại là trắng, nghĩa là chưa tương tác -> tăng giá trị
+          console.log("tín hiệu 1");
+          icon.style.color = "#22B14C"; // Đổi màu biểu tượng để biểu thị đã tương tác
+          icon.textContent = " " + (currentValue + 1); // Tăng giá trị lên 1
+          updatePostInteraction(postIndex, type, true); // Gọi hàm cập nhật với tham số tăng
+        } else {
+          // Nếu màu hiện tại là màu đã tương tác -> giảm giá trị (hủy tương tác)
+          console.log("tín hiệu 2");
+          icon.style.color = "white"; // Đổi màu biểu tượng lại về trắng
+          icon.textContent = " " + (currentValue - 1); // Giảm giá trị đi 1
+          updatePostInteraction(postIndex, type, false); // Gọi hàm cập nhật với tham số giảm
+        }
+        console.log("color after : ", icon.style.color);
+      }
     }
 
     // Kiểm tra nếu nút X được nhấn (nút delete-btn)
@@ -162,3 +206,46 @@ document
       deletePost(postIndex); // Gọi hàm deletePost với chỉ số của bài viết
     }
   });
+
+// reserve part for create json file for post
+document
+  .getElementById("postsContainer")
+  .addEventListener("click", function (event) {
+    console.log("click at postContainer");
+    const post = event.target.closest("div.post");
+    if (post) {
+      const name = post.getAttribute("data-name"); // Lấy tên bài viết
+      const content = post.getAttribute("data-content"); // Lấy nội dung bài viết
+      const time = post.getAttribute("data-time"); // Lấy thời gian bài viết
+
+      console.log("Post Index:", postIndex);
+      console.log("Post Name:", name);
+      console.log("Post Content:", content);
+      console.log("Post Time:", time);
+
+      // các giá trị lưu vào 1 file json
+    }
+  });
+function updatePostInteraction(postIndex, interactionType, increase) {
+  console.log("index: ", postIndex);
+  console.log("interactionType: ", interactionType);
+  console.log("increase: ", increase);
+  fetch("../include/update_interaction.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-cache",
+    body: JSON.stringify({
+      index: postIndex,
+      type: interactionType,
+      increase: increase,
+    }), // Gửi loại tương tác và chỉ số bài viết
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(`Cập nhật ${interactionType} thành công:`, data);
+      // Có thể xử lý giao diện người dùng nếu cần, ví dụ: tăng số lượng heart/comment/bookmark/share
+    })
+    .catch((error) => console.error("Error:", error));
+}
