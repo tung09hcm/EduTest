@@ -1,21 +1,3 @@
-// function to get post data and write it in posts.json
-function fetchPosts() {
-  fetch("../include/fetch_post.php") // Đường dẫn đến file PHP
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json(); // Mong đợi phản hồi dưới dạng JSON
-    })
-    .then((data) => {
-      console.log(data); // Xử lý dữ liệu trả về từ PHP
-      displayPosts(data); // Gọi hàm để hiển thị bài viết
-    })
-    .catch((error) => {
-      console.error("There was a problem with the fetch operation:", error);
-    });
-}
-
 // Variables
 let username_; // Lưu giá trị username
 let name_;
@@ -60,6 +42,7 @@ document
 
     fetch("../include/upload.php", {
       method: "POST",
+      cache: "no-cache",
       body: formData,
     })
       .then((response) => response.text())
@@ -104,7 +87,7 @@ async function loadPosts() {
             <button class="btn" data-index="${posts.length - 1 - index}">
               <i class="fa-solid fa-bookmark" style="color: white"></i>
             </button>
-            <button class="btn delete-btn" data-index="${
+            <button type="button" class="btn delete-btn" data-index="${
               posts.length - 1 - index
             }">
               <i class="fa-solid fa-x" style="color: white"></i>
@@ -129,6 +112,7 @@ async function loadPosts() {
       postsContainer.appendChild(postDiv);
     });
 
+    //
     // Xử lý css cho textarea tạo bảng
     const textarea = document.getElementById("content_");
     textarea.style.height = "auto"; // Đặt lại chiều cao về auto
@@ -138,17 +122,21 @@ async function loadPosts() {
 }
 
 // Hàm xóa bài viết dựa trên chỉ số index
+// Hàm xóa bài viết dựa trên chỉ số index
 function deletePost(index) {
+  // Ngăn không cho trang tải lại nếu sự kiện xảy ra trong form hoặc liên kết
+
   fetch("../include/delete_post.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    cache: "no-cache",
     body: JSON.stringify({ index: index }), // Gửi chỉ số của bài viết để xóa
   })
     .then((response) => response.text())
     .then((data) => {
-      console.log(data); // Xử lý kết quả trả về (nếu cần)
+      console.log("Xóa thành công:", data);
       loadPosts(); // Tải lại danh sách bài viết sau khi xóa
     })
     .catch((error) => console.error("Error:", error));
@@ -158,6 +146,9 @@ function deletePost(index) {
 document
   .getElementById("postsContainer")
   .addEventListener("click", function (event) {
+    // Ngăn chặn hành động mặc định
+    event.preventDefault();
+
     const icon = event.target.closest("i.fa-solid");
     if (icon) {
       // Thay đổi màu biểu tượng

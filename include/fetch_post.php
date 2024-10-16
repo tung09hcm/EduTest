@@ -11,7 +11,7 @@ $filename = $_SESSION["id"] . ".json";
 $sql = "SELECT ID, username, name, content, image_path, date_and_time, user_img_path, react, comment, bookmark, share 
         FROM post 
         ORDER BY RAND() 
-        LIMIT 10"; 
+        LIMIT 5"; 
 
 $result = $conn->query($sql);
 
