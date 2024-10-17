@@ -1,5 +1,20 @@
 [
     {
+        "id": "67113f46ac758",
+        "username": "tung.bui2004lk",
+        "name": "B\u00f9i Thanh T\u00f9ng",
+        "user_img_path": "..\/assets\/images\/user_avatar\/51ab1979.png",
+        "content": "b",
+        "image": "",
+        "time": "11:45 PM - Oct 17, 2024",
+        "react": "1",
+        "comment": "0",
+        "bookmark": "0",
+        "share": "0",
+        "react_action": 1,
+        "bookmark_action": 0
+    },
+    {
         "id": "6710900de28eb",
         "username": "tung.bui2004lk",
         "name": "B\u00f9i Thanh T\u00f9ng",
@@ -9,9 +24,9 @@
         "time": "11:18 AM - Oct 17, 2024",
         "react": "1",
         "comment": "0",
-        "bookmark": "1",
+        "bookmark": "0",
         "share": "0",
         "react_action": 1,
-        "bookmark_action": 1
+        "bookmark_action": 0
     }
 ]

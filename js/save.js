@@ -52,11 +52,21 @@ async function loadPosts() {
     posts.reverse().forEach((post, index) => {
       const postDiv = document.createElement("div");
       postDiv.classList.add("post", "bg-dark");
-      postDiv.setAttribute("data-index", posts.length - 1 - index); // Thêm tên vào thuộc tính data-name
-      postDiv.setAttribute("data-name", post.name); // Thêm tên vào thuộc tính data-name
-      postDiv.setAttribute("data-user_img_path", post.user_img_path);
+      console.log("index: ", posts.length - 1 - index);
+      postDiv.setAttribute("data-id", post.id);
       postDiv.setAttribute("data-username", post.username);
-      postDiv.setAttribute("data-content", post.content); // Thêm nội dung vào thuộc tính data-content
+      postDiv.setAttribute("data-name", post.name);
+      postDiv.setAttribute("data-user_img_path", post.user_img_path);
+      postDiv.setAttribute("data-content", post.content);
+      postDiv.setAttribute("data-image", post.image);
+      postDiv.setAttribute("data-time", post.time);
+      postDiv.setAttribute("data-react", post.react);
+      postDiv.setAttribute("data-comment", post.comment);
+      postDiv.setAttribute("data-bookmark", post.bookmark);
+      postDiv.setAttribute("data-share", post.share);
+      postDiv.setAttribute("data-react_action", post.react_action);
+      postDiv.setAttribute("data-bookmark_action", post.bookmark_action);
+      postDiv.setAttribute("data-index", posts.length - 1 - index);
       postDiv.setAttribute("data-time", post.time); // Thêm thời gian vào thuộc tính data-time
       if (post.image) {
         postDiv.setAttribute("data-img", post.image); // Thêm thuộc tính data-img
@@ -183,6 +193,33 @@ document
           updatePostInteraction(postIndex, type, false); // Gọi hàm cập nhật với tham số giảm
         }
         console.log("color after : ", icon.style.color);
+      } else if (type == "comment") {
+        document
+          .getElementById("postsContainer")
+          .addEventListener("click", function (event) {
+            console.log("click at postContainer");
+            const post = event.target.closest("div.post");
+            if (post) {
+              const PostData = {
+                id: post.getAttribute("data-id"),
+                username: post.getAttribute("data-username"),
+                name: post.getAttribute("data-name"),
+                user_img_path: post.getAttribute("data-user_img_path"),
+                content: post.getAttribute("data-content"),
+                image: post.getAttribute("data-image"),
+                time: post.getAttribute("data-time"),
+                react: post.getAttribute("data-react"),
+                comment: post.getAttribute("data-comment"),
+                bookmark: post.getAttribute("data-bookmark"),
+                share: post.getAttribute("data-share"),
+                react_action: post.getAttribute("data-react_action"),
+                bookmark_action: post.getAttribute("data-bookmark_action"),
+              };
+              localStorage.setItem("PostData", JSON.stringify(PostData));
+            }
+          });
+        console.log("chuyển hướng đến post");
+        window.open("post.php", "_blank");
       }
     }
 
@@ -194,25 +231,6 @@ document
     }
   });
 
-// reserve part for create json file for post
-document
-  .getElementById("postsContainer")
-  .addEventListener("click", function (event) {
-    console.log("click at postContainer");
-    const post = event.target.closest("div.post");
-    if (post) {
-      const name = post.getAttribute("data-name"); // Lấy tên bài viết
-      const content = post.getAttribute("data-content"); // Lấy nội dung bài viết
-      const time = post.getAttribute("data-time"); // Lấy thời gian bài viết
-
-      console.log("Post Index:", postIndex);
-      console.log("Post Name:", name);
-      console.log("Post Content:", content);
-      console.log("Post Time:", time);
-
-      // các giá trị lưu vào 1 file json
-    }
-  });
 function updatePostInteraction(postIndex, interactionType, increase) {
   console.log("index: ", postIndex);
   console.log("interactionType: ", interactionType);
