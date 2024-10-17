@@ -59,7 +59,7 @@
       function fetchPosts() {
         console.log("Initial fetch Posts stage 2 !!!")
 
-        fetch("../include/fetch_post.php") // Đường dẫn đến file PHP
+        fetch("../include/fetch_fav_post.php") // Đường dẫn đến file PHP
           .then((response) => {
             if (!response.ok) {
               throw new Error("Network response was not ok");
@@ -82,7 +82,7 @@
     <div class="main_container">
       <!-- LEFT CONTAINER -->
       <div class="left" style="border-right: 1px solid rgb(103, 100, 100); ">
-        <div class="item" style="color: #22b14c; cursor: pointer" id ="home">
+        <div class="item" style=" cursor: pointer" id ="home">
           <i class="fa-solid fa-house"></i>
           <h1>Home</h1>
         </div>
@@ -107,7 +107,7 @@
           <h1>Community</h1>
         </div> -->
 
-        <div class="item" style = "cursor: pointer" id = "favourite">
+        <div class="item" style = "cursor: pointer; color: #22b14c;" id = "favourite">
           <i class="fa-solid fa-heart"></i>
           <h1>Favourite</h1>
         </div>
@@ -133,58 +133,8 @@
       <!-- CENTER CONTAINER -->
 
       <div class="center">
-        <div class="create bg-dark">
-          <div class="create-header">
-            <img
-              src="<?php echo $_SESSION['file_path']; ?>"
-              alt="user_avatar"
-              class="avatar"
-            />
-            <!-- <span style="color: rgb(103, 100, 100)">What is happening ?</span> -->
-            <form
-              id="postForm"
-              method="post"
-              enctype="multipart/form-data"
-              class="create_post_form"
-            >
-            <textarea
-              id="content_"
-              name="content"
-              placeholder="What is happening..."
-              required
-              class="bg-dark"
-              style="border: none; width: 100%; color: white; outline: none; resize: none; overflow: hidden; white-space: pre-wrap;"
-            ></textarea>
-
-              <script>
-                const textarea = document.getElementById('content_');
-                textarea.addEventListener('input', function () {
-                  this.style.height = 'auto';
-                  this.style.height = this.scrollHeight + 'px'; // Mở rộng chiều cao theo nội dung
-                });
-              </script>
-
-              <label for="image" class="custom-file-upload">
-                <i class="fa-solid fa-image" style="font-size: 20px"></i>
-              </label>
-              <input
-                class="choose_img"
-                type="file"
-                id="image"
-                name="image"
-                accept="image/*"
-              />
-
-              <!-- </div> -->
-              <button type="submit" class="btn btn-success">Post</button>
-            </form>
-          </div>
-        </div>
         <div class="postsContainer" id = "postsContainer">
         </div>
-        <button type="button" class="btn btn-outline-success" style = "color: green" id = "load_more">
-          Load more
-        </button>
       </div>
 
       <!-- RIGHT CONTAINER -->
@@ -238,7 +188,7 @@
 
          
     <script src="../js/redirect.js"></script>
-    <script src="../js/homepage.js"></script>
+    <script src="../js/favourite.js"></script>
     <script
       src="https://kit.fontawesome.com/55709266d7.js"
       crossorigin="anonymous"

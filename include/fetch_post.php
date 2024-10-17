@@ -9,8 +9,7 @@ $filename = $_SESSION["id"] . ".json";
 // Truy vấn dữ liệu từ cơ sở dữ liệu
 $sql = "SELECT ID, username, name, content, image_path, date_and_time, user_img_path, react, comment, bookmark, share 
         FROM post 
-        ORDER BY RAND() 
-        LIMIT 5";
+        ORDER BY RAND()";
 
 $result = $conn->query($sql);
 
