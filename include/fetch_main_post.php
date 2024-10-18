@@ -5,7 +5,9 @@ session_start();
 $data = json_decode(file_get_contents("php://input"), true);
 $postid = isset($data['id']) ? ($data['id']) : null;
 $filename = $postid . ".json";
-
+if (file_exists($filename)) {
+    unlink($filename); // Xóa file
+}
 
 
 // Truy vấn dữ liệu từ cơ sở dữ liệu

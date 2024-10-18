@@ -1,47 +1,17 @@
 [
     {
-        "id": "6710900de28eb",
+        "id": "67124c1521d97",
         "username": "tung.bui2004lk",
         "name": "B\u00f9i Thanh T\u00f9ng",
         "user_img_path": "..\/assets\/images\/user_avatar\/51ab1979.png",
         "content": "a",
         "image": "",
-        "time": "11:18 AM - Oct 17, 2024",
-        "react": "1",
+        "time": "6:52 PM - Oct 18, 2024",
+        "react": "0",
         "comment": "0",
         "bookmark": "0",
         "share": "0",
-        "react_action": 1,
-        "bookmark_action": 0
-    },
-    {
-        "id": "6711db43eb48d",
-        "username": "tung.bui2004lk",
-        "name": "B\u00f9i Thanh T\u00f9ng",
-        "user_img_path": "..\/assets\/images\/user_avatar\/51ab1979.png",
-        "content": "https:\/\/github.com\/tung09hcm\/EduTest\/blob\/main\/assets\/css\/style.css",
-        "image": "",
-        "time": "10:51 AM - Oct 18, 2024",
-        "react": "1",
-        "comment": "0",
-        "bookmark": "0",
-        "share": "0",
-        "react_action": 1,
-        "bookmark_action": 0
-    },
-    {
-        "id": "67113f46ac758",
-        "username": "tung.bui2004lk",
-        "name": "B\u00f9i Thanh T\u00f9ng",
-        "user_img_path": "..\/assets\/images\/user_avatar\/51ab1979.png",
-        "content": "b",
-        "image": "",
-        "time": "11:45 PM - Oct 17, 2024",
-        "react": "1",
-        "comment": "0",
-        "bookmark": "0",
-        "share": "0",
-        "react_action": 1,
+        "react_action": 0,
         "bookmark_action": 0
     }
 ]

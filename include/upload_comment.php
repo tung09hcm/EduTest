@@ -91,8 +91,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Không thể thêm nội dung vào post: " . $e->getMessage(); // In ra lỗi
     }
 
-    $conn->close();
 
+
+    $sql = "UPDATE post SET comment = comment + 1 WHERE ID = ?";
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        throw new Exception("Prepare failed: " . $conn->error);
+    }
+    $stmt->bind_param("s",$parent_post_id ); 
+    if (!$stmt->execute()) {
+        throw new Exception("Execute failed: " . $stmt->error);
+    }
+    $conn->close();
 }
 
 ?>

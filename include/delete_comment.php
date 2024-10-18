@@ -1,9 +1,24 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    include("../include/database.php");
     // Lấy dữ liệu JSON từ request body
     $data = json_decode(file_get_contents('php://input'), true);
     $indexToDelete = $data['index'];  // Chỉ số bài viết cần xóa
+    $parent_post_id = $data['parent_post_id'];
+
+    $sql = "UPDATE post SET comment = GREATEST(comment - 1, 0) WHERE ID = ?";
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        throw new Exception("Prepare failed: " . $conn->error);
+    }
+    $stmt->bind_param("s",$parent_post_id ); 
+    if (!$stmt->execute()) {
+        throw new Exception("Execute failed: " . $stmt->error);
+    }
+    $conn->close();
+
+    
     session_start();
     $file = $_SESSION["id"] . "_comment.json";
     // Đọc file JSON chứa các bài viết

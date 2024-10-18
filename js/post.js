@@ -3,6 +3,59 @@ window.onload = async function () {
   await loadPost(); // Tải bài viết
   await loadComments();
 };
+
+async function fetchComments() {
+  console.log("Initial fetch Posts stage 2 !!!");
+  const post = JSON.parse(localStorage.getItem("PostData"));
+  console.log("id bài viết: ", post.id);
+  fetch("../include/fetch_comment.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: post.id,
+    }),
+  }) // Đường dẫn đến file PHP
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json(); // Mong đợi phản hồi dưới dạng JSON
+    })
+    .then((data) => {
+      console.log(data); // Xử lý dữ liệu trả về từ PHP
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+}
+async function fetchPosts() {
+  console.log("Initial fetch Posts stage 2 !!!");
+  const post = JSON.parse(localStorage.getItem("PostData"));
+  fetch("../include/fetch_main_post.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: post.id,
+    }),
+  }) // Đường dẫn đến file PHP
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json(); // Mong đợi phản hồi dưới dạng JSON
+    })
+    .then((data) => {
+      console.log(data); // Xử lý dữ liệu trả về từ PHP
+    })
+    .catch((error) => {
+      console.error("There was a problem with the fetch operation:", error);
+    });
+}
+
 // Lắng nghe sự kiện submit của form tạo comment
 document
   .getElementById("postForm")
@@ -27,7 +80,14 @@ document
     })
       .then((response) => response.text())
       .then((data) => {
+        fetchComments();
+        fetchPosts();
+        loadPost(); // Tải bài viết
         loadComments();
+        let comment_data = document.getElementById("comment_x");
+        let current_value = parseInt(comment_data.innerHTML); // Chuyển thành số nguyên
+        comment_data.innerHTML = current_value + 1; // Tăng giá trị lên 1
+
         this.reset(); // Reset form
       })
       .catch((error) => console.error("Error:", error));
@@ -100,7 +160,7 @@ async function loadPost() {
               : `<div class="heart" ><i class="fa-solid fa-heart"  style = "font-size: 16px; color: white" id="heart"> ${data.react} </i></div>`
           }
 
-          <div class="comment"><i class="fa-solid fa-comment"  style = "font-size: 16px; color: white" id = "comment"> ${
+          <div class="comment"><i class="fa-solid fa-comment"  style = "font-size: 16px; color: white" id = "comment_x"> ${
             data.comment
           } </i></div>
 
@@ -317,19 +377,23 @@ async function loadComments() {
 // Hàm xóa bài viết dựa trên chỉ số index
 function deletePost(index) {
   // Ngăn không cho trang tải lại nếu sự kiện xảy ra trong form hoặc liên kết
-
+  const post = JSON.parse(localStorage.getItem("PostData"));
+  const parent_post_id = post.id;
   fetch("../include/delete_comment.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     cache: "no-cache",
-    body: JSON.stringify({ index: index }), // Gửi chỉ số của bài viết để xóa
+    body: JSON.stringify({ index: index, parent_post_id: parent_post_id }), // Gửi chỉ số của bài viết để xóa
   })
     .then((response) => response.text())
     .then((data) => {
       console.log("Xóa thành công:", data);
-      loadComments(); // Tải lại danh sách bài viết sau khi xóa
+      fetchComments();
+      fetchPosts();
+      loadPost(); // Tải bài viết
+      loadComments();
     })
     .catch((error) => console.error("Error:", error));
 }

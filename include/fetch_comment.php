@@ -6,7 +6,9 @@ $json = file_get_contents('php://input');
 $data = json_decode(file_get_contents("php://input"), true);
 $parent_post_id = isset($data['id']) ? ($data['id']) : null;
 $filename = $_SESSION["id"] . "_comment.json";
-
+if (file_exists($filename)) {
+    unlink($filename); // Xóa file
+}
 ///////////////////////////////////////////////////////////////////
 // Tạo một mảng để lưu dữ liệu cần debug
 $debug_data = array(

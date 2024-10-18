@@ -2,10 +2,13 @@
 
 include("../include/database.php");
 session_start();
+
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 $filename = $_SESSION["id"] . ".json";
-
+if (file_exists($filename)) {
+    unlink($filename); // Xóa file
+}
 // Truy vấn dữ liệu từ cơ sở dữ liệu
 $sql = "SELECT ID, username, name, content, image_path, date_and_time, user_img_path, react, comment, bookmark, share 
         FROM post 
