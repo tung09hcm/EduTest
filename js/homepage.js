@@ -154,7 +154,9 @@ async function loadPosts() {
     console.error("Error loading posts:", error);
   }
 }
-
+/////////////////////////////////////////////////////////////////////////////////
+// 3 hàm cuối để tương tác vs element của post
+// todo sửa lại cho nó hoạt động trên cả comment
 // Hàm xóa bài viết dựa trên chỉ số index
 function deletePost(index) {
   // Ngăn không cho trang tải lại nếu sự kiện xảy ra trong form hoặc liên kết
@@ -171,6 +173,29 @@ function deletePost(index) {
     .then((data) => {
       console.log("Xóa thành công:", data);
       loadPosts(); // Tải lại danh sách bài viết sau khi xóa
+    })
+    .catch((error) => console.error("Error:", error));
+}
+function updatePostInteraction(postIndex, interactionType, increase) {
+  console.log("index: ", postIndex);
+  console.log("interactionType: ", interactionType);
+  console.log("increase: ", increase);
+  fetch("../include/update_interaction.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-cache",
+    body: JSON.stringify({
+      index: postIndex,
+      type: interactionType,
+      increase: increase,
+    }), // Gửi loại tương tác và chỉ số bài viết
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(`Cập nhật ${interactionType} thành công:`, data);
+      // Có thể xử lý giao diện người dùng nếu cần, ví dụ: tăng số lượng heart/comment/bookmark/share
     })
     .catch((error) => console.error("Error:", error));
 }
@@ -254,29 +279,3 @@ document
       deletePost(postIndex); // Gọi hàm deletePost với chỉ số của bài viết
     }
   });
-
-// reserve part for create json file for post
-
-function updatePostInteraction(postIndex, interactionType, increase) {
-  console.log("index: ", postIndex);
-  console.log("interactionType: ", interactionType);
-  console.log("increase: ", increase);
-  fetch("../include/update_interaction.php", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    cache: "no-cache",
-    body: JSON.stringify({
-      index: postIndex,
-      type: interactionType,
-      increase: increase,
-    }), // Gửi loại tương tác và chỉ số bài viết
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(`Cập nhật ${interactionType} thành công:`, data);
-      // Có thể xử lý giao diện người dùng nếu cần, ví dụ: tăng số lượng heart/comment/bookmark/share
-    })
-    .catch((error) => console.error("Error:", error));
-}

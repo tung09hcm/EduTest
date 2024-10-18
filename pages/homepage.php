@@ -182,9 +182,9 @@
         </div>
         <div class="postsContainer" id = "postsContainer">
         </div>
-        <button type="button" class="btn btn-outline-success" style = "color: green" id = "load_more">
+        <!-- <button type="button" class="btn btn-outline-success" style = "color: green" id = "load_more">
           Load more
-        </button>
+        </button> -->
       </div>
 
       <!-- RIGHT CONTAINER -->

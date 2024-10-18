@@ -3,6 +3,20 @@ session_start();
 echo "upload_comment.php";
 echo "\nuser id: " . $_SESSION["id"] . "\n";
 
+$data = json_decode(file_get_contents("php://input"), true);
+$parent_post_id = isset($_POST["parent_post_id"]) ? ($_POST["parent_post_id"]) : null;
+///////////////////////////////////////////////////////////////////
+// // Tạo một mảng để lưu dữ liệu cần debug
+// $debug_data = array(
+//     "parent_post_id" => $parent_post_id
+// );
+
+// // Chuyển đổi mảng sang định dạng JSON
+// $json_data = json_encode($debug_data, JSON_PRETTY_PRINT);
+
+// // Ghi dữ liệu JSON vào tệp debug.json
+// file_put_contents('debug.json', $json_data);
+///////////////////////////////////////////////////////////////////
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content = $_POST['content'];
     
@@ -55,8 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     include("../include/database.php");
         
-    $sql = "INSERT INTO post (id, username, name, content, date_and_time, image_path,user_img_path,react, comment, bookmark, share) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 0)"; // Sử dụng placeholder cho câu lệnh    
+    $sql = "INSERT INTO post (parent_post_id,id, username, name, content, date_and_time, image_path,user_img_path,react, comment, bookmark, share) 
+    VALUES (? ,?, ?, ?, ?, ?, ?, ?, 0, 0, 0, 0)"; // Sử dụng placeholder cho câu lệnh    
 
     try {
         $stmt = $conn->prepare($sql); // Chuẩn bị câu lệnh
@@ -65,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Gán giá trị cho placeholder
-        $stmt->bind_param("sssssss", $post_Id, $_SESSION["username"], $_SESSION["name"], 
+        $stmt->bind_param("ssssssss",$parent_post_id , $post_Id, $_SESSION["username"], $_SESSION["name"], 
                             $content, $currentTime, $imagePath, $_SESSION["file_path"]); 
 
         if (!$stmt->execute()) {

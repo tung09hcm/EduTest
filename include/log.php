@@ -75,7 +75,7 @@
         $row = $result->fetch_assoc();
         
         // Kiểm tra mật khẩu bằng password_verify
-        if (password_verify($password, $row['password']) && $row['online'] == 0) {
+        if (password_verify($password, $row['password'])) {
             // Mật khẩu đúng, lưu thông tin vào session
             $_SESSION["username"] = $username;
             $_SESSION["name"] = $row['name'];
@@ -84,10 +84,7 @@
             $_SESSION["file_path"] = $row['file_path'];
             $_SESSION["login"] = true;
 
-            $updateStmt = $conn->prepare("UPDATE user SET online = 1 WHERE username = ?");
-            $updateStmt->bind_param("s", $username);
-            $updateStmt->execute();
-            $updateStmt->close();
+
 
             // Chuyển hướng tới trang chính
             header("Location: ../pages/homepage.php");

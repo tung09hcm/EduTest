@@ -2,19 +2,33 @@
 
 include("../include/database.php");
 session_start();
-$json = file_get_contents('php://input');
-$data = json_decode($json, true);
-$filename = $_SESSION["id"] . ".json";
+$data = json_decode(file_get_contents("php://input"), true);
+$postid = isset($data['id']) ? ($data['id']) : null;
+$filename = $postid . ".json";
+
+
 
 // Truy vấn dữ liệu từ cơ sở dữ liệu
-$sql = "SELECT ID, username, name, content, image_path, date_and_time, user_img_path, react, comment, bookmark, share 
+$sql = "SELECT * 
         FROM post 
-        WHERE parent_post_id = ''
-        ORDER BY RAND()";
+        WHERE ID = ?";
 
-$result = $conn->query($sql);
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $postid);  // Sử dụng prepared statement để tránh SQL injection
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
 
-$posts = [];
+
+
+
+if ($result === false) {
+    // Xử lý lỗi nếu truy vấn thất bại
+    echo json_encode(['error' => 'Failed to fetch post data']);
+    exit();
+}
+
+
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -25,7 +39,7 @@ if ($result->num_rows > 0) {
         // Chuẩn bị câu truy vấn với prepared statement
         $sql_action_table = "SELECT * FROM post_action WHERE post_id = ? AND user_id = ?";
         $stmt = $conn->prepare($sql_action_table);
-        $stmt->bind_param("is", $row['ID'], $_SESSION["id"]); // Sử dụng prepared statement để tránh SQL injection
+        $stmt->bind_param("ss", $postid, $_SESSION["id"]); // Sử dụng prepared statement để tránh SQL injection
         $stmt->execute();
         $action_result = $stmt->get_result();
 
@@ -58,19 +72,17 @@ if ($result->num_rows > 0) {
             'react_action' => $react_action,
             'bookmark_action' => $bookmark_action,
         ];
-        // Thêm bài viết vào mảng
-        $posts[] = $post;
+        if (!empty($post)) {
+            file_put_contents($filename, json_encode($post, JSON_PRETTY_PRINT));
+        }
+
     }
 }
 
-// Ghi dữ liệu vào file JSON (nếu cần)
-if (!empty($posts)) {
-    file_put_contents($filename, json_encode($posts, JSON_PRETTY_PRINT));
-}
 
 // Trả về dữ liệu dưới dạng JSON
 header('Content-Type: application/json');
-echo json_encode($posts);
+echo json_encode($post);
 
 $conn->close();
 ?>

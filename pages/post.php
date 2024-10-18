@@ -66,7 +66,62 @@
     <link rel="stylesheet" href="../assets/css/style.css" />
     <link rel="stylesheet" href="../assets/css/responsive.css" />
     <link rel="stylesheet" href="../assets/css/flashcard_item.css" />
-    
+    <script>
+      function fetchComments() {
+        console.log("Initial fetch Posts stage 2 !!!")
+        const post = JSON.parse(localStorage.getItem("PostData"));
+        console.log("id bài viết: ", post.id);
+        fetch("../include/fetch_comment.php",{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: post.id
+          }),
+        }) // Đường dẫn đến file PHP
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json(); // Mong đợi phản hồi dưới dạng JSON
+          })
+          .then((data) => {
+            console.log(data); // Xử lý dữ liệu trả về từ PHP
+          })
+          .catch((error) => {
+            console.error("There was a problem with the fetch operation:", error);
+          });
+      }
+      function fetchPosts() {
+        console.log("Initial fetch Posts stage 2 !!!")
+        const post = JSON.parse(localStorage.getItem("PostData"));
+        fetch("../include/fetch_main_post.php",{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: post.id
+          }),
+        }) // Đường dẫn đến file PHP
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json(); // Mong đợi phản hồi dưới dạng JSON
+          })
+          .then((data) => {
+            console.log(data); // Xử lý dữ liệu trả về từ PHP
+          })
+          .catch((error) => {
+            console.error("There was a problem with the fetch operation:", error);
+          });
+      }
+      console.log("Initial fetch Posts!!!")
+      document.addEventListener('DOMContentLoaded', fetchPosts);
+      document.addEventListener('DOMContentLoaded', fetchComments);
+    </script>   
   </head>
   <body class="bg-dark">
     <div class="main_container">
@@ -132,6 +187,10 @@
 
         </div>
 
+        <br>
+        <h1 style = "font-size: 25px">Comment section</h1>
+        <br>
+
         <div class="create bg-dark">
           <div class="create-header">
             <img
@@ -149,7 +208,7 @@
             <textarea
               id="content_"
               name="content"
-              placeholder="What is happening..."
+              placeholder="Post your reply"
               required
               class="bg-dark"
               style="border: none; width: 100%; color: white; outline: none; resize: none; overflow: hidden; white-space: pre-wrap;"
@@ -175,9 +234,12 @@
               />
 
               <!-- </div> -->
-              <button type="submit" class="btn btn-success">Post</button>
+              <button type="submit" class="btn btn-success">Reply</button>
             </form>
           </div>
+        </div>
+
+        <div class="postsContainer" id = "postsContainer">
         </div>
         
       </div>

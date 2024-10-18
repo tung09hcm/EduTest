@@ -2,6 +2,7 @@
 include("../include/database.php");
 session_start();
 $filename = $_SESSION["id"] . ".json";
+$commment_filename = $_SESSION["id"] . "_comment.json";
 $updateStmt = $conn->prepare("UPDATE user SET online = 0 WHERE username = ?");
 $updateStmt->bind_param("s", $_SESSION["username"]);
 $updateStmt->execute();
@@ -15,8 +16,11 @@ session_destroy(); // Hủy session
 if (file_exists($filename)) {
     unlink($filename); // Xóa file
 }
+if (file_exists($commment_filename)) {
+    unlink($commment_filename); // Xóa file
+}
 
-$file_user = '../pages/debug.json';
+$file_user = '../include/debug.json';
 if (file_exists($file_user)) {
     unlink($file_user); // Xóa file
 }

@@ -70,8 +70,8 @@ img {
   flex-direction: row;
 }
 /* .dropdown_custom: hover {
-  
-} */
+    
+  } */
 main {
   width: 90%;
   margin: 0 auto;
@@ -266,7 +266,6 @@ main {
 }
 .post,
 .create {
-  cursor: pointer;
   border-radius: 15px;
   width: 80%;
   padding: 10px;
@@ -381,4 +380,10 @@ main {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+}
+.heart,
+.comment,
+.bookmark,
+.share {
+  cursor: pointer;
 }
